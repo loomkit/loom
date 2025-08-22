@@ -22,7 +22,7 @@
         "chat": "https://github.com/orgs/loomkit/discussions"
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "illuminate/console": "^12.24",
         "spatie/laravel-package-tools": "^1.92"
     },
