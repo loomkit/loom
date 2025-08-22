@@ -1,4 +1,4 @@
-# 📦️ Loom [<img src="https://github.com/siguici/art/blob/HEAD/images/loom.svg" alt="Loom Logo" height="24" />][loomkit-link]
+# Loom [<img src="https://raw.githubusercontent.com/loomkit/starter/HEAD/public/favicon.svg" alt="🧵" width="28" />][loomkit-link]
 
 Create a new [Loom][loomkit-link] project based on this package.
 
