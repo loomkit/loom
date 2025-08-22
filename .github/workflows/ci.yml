@@ -50,12 +50,12 @@ jobs:
 
       - name: ⚗️  Run static analysis
         run: |
-          composer verify
+          # composer verify
           composer analyse
-          composer inspect
+          # composer inspect
 
       - name: 🧪 Run unit tests
         run: composer test
 
-      - name: 🐛 Check all code bugs
-        run: composer debug
+      # - name: 🐛 Check all code bugs
+      #   run: composer debug

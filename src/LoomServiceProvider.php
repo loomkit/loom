@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Loom;
 
+use Loom\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -23,7 +24,7 @@ class LoomServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         $commands = [
-            //
+            InstallCommand::class,
         ];
 
         $aliases = [];
