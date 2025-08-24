@@ -1,0 +1,73 @@
+name: Split Packages
+
+on:
+  push:
+    branches:
+      - main
+      - "0.*"
+    tags:
+      - "*"
+  release:
+    types: [created]
+
+jobs:
+  split-packages:
+    name: 📦 Split ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ["core"] # 🔮 Add more packages here...
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔍 Extract commit info
+        run: |
+          echo "AUTHOR_NAME=$(git log -1 --pretty=%an)" >> $GITHUB_ENV
+          echo "AUTHOR_EMAIL=$(git log -1 --pretty=%ae)" >> $GITHUB_ENV
+
+      - name: 📌 Prepare tag
+        if: "startsWith(github.ref, 'refs/tags/')"
+        run: echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: 🌿 Split ${{ matrix.package }} (branch)
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        uses: danharrin/monorepo-split-github-action@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+        with:
+          package_directory: "packages/${{ matrix.package }}"
+          repository_organization: "loomkit"
+          repository_name: "${{ matrix.package }}"
+          user_name: "${{ env.AUTHOR_NAME }}"
+          user_email: "${{ env.AUTHOR_EMAIL }}"
+          branch: ${GITHUB_REF#refs/heads/}
+
+      - name: 🏷️🌿 Split ${{ matrix.package }} (tag branch)
+        if: "startsWith(github.ref, 'refs/tags/')"
+        uses: danharrin/monorepo-split-github-action@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+        with:
+          package_directory: "packages/${{ matrix.package }}"
+          repository_organization: "loomkit"
+          repository_name: "${{ matrix.package }}"
+          user_name: "${{ env.AUTHOR_NAME }}"
+          user_email: "${{ env.AUTHOR_EMAIL }}"
+          branch: ${GITHUB_TAG%.*}
+
+      - name: 🏷️ Tag ${{ matrix.package }}
+        if: "startsWith(github.ref, 'refs/tags/')"
+        uses: danharrin/monorepo-split-github-action@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+        with:
+          tag: ${GITHUB_REF#refs/tags/}
+          package_directory: "packages/${{ matrix.package }}"
+          repository_organization: "loomkit"
+          repository_name: "${{ matrix.package }}"
+          user_name: "${{ env.AUTHOR_NAME }}"
+          user_email: "${{ env.AUTHOR_EMAIL }}"
+          branch: ${GITHUB_TAG%.*}
