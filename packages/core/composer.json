@@ -1,6 +1,6 @@
 {
-    "name": "loomkit/loom",
-    "description": "📦️ Loom provides useful commands, modules, features and resources for your web application.",
+    "name": "loomkit/core",
+    "description": "Loom Laravel starter-kit core functionality.",
     "homepage": "https://loomkit.github.io",
     "license": "MIT",
     "keywords": [
@@ -33,51 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Loom\\": "packages/core/src/"
+            "Loom\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Loom\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "analyse": "phpstan analyse --ansi --memory-limit=-1 --debug",
-        "check": "pint --test -v",
-        "coverage": "pest --coverage",
-        "discover": "testbench package:discover --ansi",
-        "debug": [
-            "@verify",
-            "@check",
-            "@analyse",
-            "@inspect",
-            "@review",
-            "@test"
-        ],
-        "init:tools": [
-            "psalm --init",
-            "rector init",
-            "pest --init"
-        ],
-        "fix": [
-            "@refactor",
-            "@improve",
-            "@format",
-            "@lint"
-        ],
-        "format": "psalter --issues=all",
-        "improve": "phpinsights fix",
-        "inspect": "psalm --no-diff",
-        "lint": "pint -v",
-        "post-autoload-dump": ["@discover"],
-        "test": "pest --colors=always",
-        "refactor": "rector",
-        "retest": "pest --retry",
-        "review": "rector --dry-run --debug",
-        "verify": "phpinsights analyse"
-    },
-    "replace": {
-        "loom/core": "self.version"
     },
     "extra": {
         "laravel": {

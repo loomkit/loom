@@ -11,7 +11,7 @@
   </php>
   <source>
     <include>
-      <directory suffix=".php">./src</directory>
+      <directory suffix=".php">./packages/**/src</directory>
     </include>
   </source>
 </phpunit>
