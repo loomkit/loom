@@ -11,7 +11,7 @@
 |
 */
 
-// uses(Loom\Tests\TestCase::class)->in('Feat');
+uses(Loom\Tests\TestCase::class)->in('');
 
 /*
 |--------------------------------------------------------------------------
