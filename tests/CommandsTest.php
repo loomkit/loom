@@ -17,3 +17,18 @@ test('aliases should expand commands', function () {
     expect(new MakeColumnCommandAlias($files))->toBeInstanceOf(MakeColumnCommand::class);
     expect(new MakeFieldCommandAlias($files))->toBeInstanceOf(MakeFieldCommand::class);
 });
+
+test('aliases should be callable', function () {
+    $makeFieldTester = $this->artisan('loom:field', [
+        'name' => 'test',
+        'component' => 'TextInput',
+    ]);
+
+    $makeColumnTester = $this->artisan('loom:column', [
+        'name' => 'test',
+        'column' => 'TextColumn',
+    ]);
+
+    $makeFieldTester->assertSuccessful();
+    $makeColumnTester->assertSuccessful();
+});
