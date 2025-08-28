@@ -18,7 +18,7 @@ class MakeColumnCommand extends MakeCommand
 
     protected function getStub()
     {
-        return $this->resolveStubPath('/stubs/column.stub');
+        return $this->resolveStubPath('column.stub');
     }
 
     /**

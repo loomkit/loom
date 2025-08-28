@@ -18,7 +18,7 @@ class MakeFieldCommand extends MakeCommand
 
     protected function getStub()
     {
-        return $this->resolveStubPath('/stubs/field.stub');
+        return $this->resolveStubPath('field.stub');
     }
 
     /**

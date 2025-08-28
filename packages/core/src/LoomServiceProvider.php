@@ -16,8 +16,14 @@ class LoomServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('loom')
-            ->hasCommands($this->getCommands())
-            ->hasConfigFile();
+            ->hasCommands($this->getCommands());
+    }
+
+    public function bootingPackage(): void
+    {
+        $this->publishes([
+            __DIR__.'/../stubs' => base_path('stubs/loom'),
+        ], 'loom-stubs');
     }
 
     /**

@@ -18,9 +18,9 @@ abstract class MakeCommand extends GeneratorCommand
     {
         $stub = trim($stub, '/');
 
-        return file_exists($customPath = $this->laravel->basePath($stub))
+        return file_exists($customPath = $this->laravel->basePath("/stubs/loom/{$stub}"))
             ? $customPath
-            : dirname(__DIR__, 2).DIRECTORY_SEPARATOR.$stub;
+            : dirname(__DIR__, 2).DIRECTORY_SEPARATOR."/stubs/{$stub}";
     }
 
     protected function replaceArgument(string &$stub, string $name, string $default = 'null'): static
