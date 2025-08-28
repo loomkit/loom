@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Loom\Commands\Aliases;
 
-use Loom\Commands\InstallCommand as Command;
+use Loom\Commands\MakeFieldCommand as Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand(name: 'loom:install')]
-class InstallCommand extends Command
+#[AsCommand(name: 'loom:field')]
+class MakeFieldCommand extends Command
 {
     protected $hidden = true;
 }
