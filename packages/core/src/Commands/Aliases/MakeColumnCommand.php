@@ -11,4 +11,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 class MakeColumnCommand extends Command
 {
     protected $hidden = true;
+
+    protected $signature = 'loom:column {name} {column} {label?} {--f|force}';
 }

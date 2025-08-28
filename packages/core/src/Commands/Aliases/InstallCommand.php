@@ -11,4 +11,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 class InstallCommand extends Command
 {
     protected $hidden = true;
+
+    protected $signature = 'loom:install {--f|force}';
 }

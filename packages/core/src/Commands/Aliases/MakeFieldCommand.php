@@ -11,4 +11,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 class MakeFieldCommand extends Command
 {
     protected $hidden = true;
+
+    protected $signature = 'loom:field {name} {component} {label?} {--f|force}';
 }
