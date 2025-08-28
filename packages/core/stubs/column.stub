@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Filament\Tables\Columns\{{ column }};
+
+class {{ class }}
+{
+    public static function make(?string $name = null): {{ column }}
+    {
+        $name ??= {{ name }};
+
+        return {{ column }}::make($name)
+            ->label(__({{ label }}));
+    }
+}

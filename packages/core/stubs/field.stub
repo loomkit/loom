@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Filament\Forms\Components\{{ component }};
+
+class {{ class }}
+{
+    public static function make(?string $name = null): {{ component }}
+    {
+        $name ??= {{ name }};
+
+        return {{ component }}::make($name)
+            ->label(__({{ label }}));
+    }
+}
