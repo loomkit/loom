@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Loom;
 
-use Loom\Commands\InstallCommand;
 use Loom\Commands\MakeColumnCommand;
 use Loom\Commands\MakeFieldCommand;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -16,7 +16,18 @@ class LoomServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('loom')
-            ->hasCommands($this->getCommands());
+            ->hasCommands($this->getCommands())
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->startWith(function (InstallCommand $command) {
+                        $command->info('Installing Loom...');
+                    })
+                    ->copyAndRegisterServiceProviderInApp()
+                    ->askToStarRepoOnGitHub('loomkit/loom')
+                    ->endWith(function (InstallCommand $command) {
+                        $command->info('Loom installed successfully ✅');
+                    });
+            });
     }
 
     public function registeringPackage(): void
@@ -35,7 +46,6 @@ class LoomServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         $commands = [
-            InstallCommand::class,
             MakeColumnCommand::class,
             MakeFieldCommand::class,
         ];
