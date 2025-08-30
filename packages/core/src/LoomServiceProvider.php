@@ -19,6 +19,11 @@ class LoomServiceProvider extends PackageServiceProvider
             ->hasCommands($this->getCommands());
     }
 
+    public function registeringPackage(): void
+    {
+        $this->registerServices();
+    }
+
     public function bootingPackage(): void
     {
         $this->registerPublishables();
@@ -51,6 +56,12 @@ class LoomServiceProvider extends PackageServiceProvider
             ...$commands,
             ...$aliases,
         ];
+    }
+
+    protected function registerServices(): void
+    {
+        $this->app->singleton(LoomManager::class);
+        $this->app->alias(LoomManager::class, 'loom');
     }
 
     protected function registerPublishables(): void
