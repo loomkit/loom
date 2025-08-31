@@ -68,7 +68,7 @@ see the [LICENSE][license-link] file for details.
 
 [loomkit-link]: https://github.com/loomkit "Loom"
 
-[php-icon]: https://img.shields.io/badge/PHP-8.2-ccc.svg?style=flat&logo=php
+[php-icon]: https://img.shields.io/badge/PHP-8.3-ccc.svg?style=flat&logo=php
 [php-link]: https://github.com/loomkit/loom/search?l=php "PHP code"
 
 [packagist-version-icon]: https://img.shields.io/packagist/v/loomkit/loom
@@ -89,4 +89,4 @@ see the [LICENSE][license-link] file for details.
 [pr-link]: https://loomkit.github.io/contributions "PRs welcome!"
 [conduct-link]: https://loomkit.github.io/code-of-conduct "Loom's Code of Conduct"
 [discuss-link]: https://github.com/orgs/loomkit/discussions "Loom's GitHub discussions"
-[docs-link]: https://loomkit.github.io/packages/loom "Loom Documentation"
+[docs-link]: https://loomkit.github.io "Loom Documentation"
