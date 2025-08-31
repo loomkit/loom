@@ -13,6 +13,23 @@ final class LoomManager
 {
     public const string VERSION = '0.0.0';
 
+    public const string LOGO = <<<TXT
+  _
+ | |    ___   ___  _ __ ___
+ | |   / _ \ / _ \| '_ ` _ \
+ | |__| (_) | (_) | | | | | |
+ |_____\___/ \___/|_| |_| |_|
+TXT;
+
+    public const string FILLED_LOGO = <<<'TXT'
+ ██╗       ██████╗   ██████╗  ███╗   ███╗
+ ██║      ██╔═══██╗ ██╔═══██╗ ████╗ ████║
+ ██║      ██║   ██║ ██║   ██║ ██╔████╔██║
+ ██║      ██║   ██║ ██║   ██║ ██║╚██╔╝██║
+ ███████╗ ╚██████╔╝ ╚██████╔╝ ██║ ╚═╝ ██║
+ ╚══════╝  ╚═════╝   ╚═════╝  ╚═╝     ╚═╝
+TXT;
+
     protected ?string $version = null;
 
     public function getVersion(): string
