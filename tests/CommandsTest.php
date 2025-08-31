@@ -11,7 +11,7 @@ use Loom\Commands\MakeFieldCommand;
 test('install command', function () {
     $this->artisan('loom:install')
         ->expectsQuestion('Would you like to star our repo on GitHub?', true)
-        ->expectsOutput('Loom installed successfully ✅')
+        ->expectsOutput('loom has been installed!')
         ->assertSuccessful();
 });
 
