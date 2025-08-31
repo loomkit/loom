@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static string getVersion()
+ * @method static string getLogo(string $color = 'blue', bool $filled = true)
  *
  * @see \Loom\LoomManager
  */

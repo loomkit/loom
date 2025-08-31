@@ -20,7 +20,7 @@ class LoomServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->startWith(function (InstallCommand $command) {
-                        $command->info(PHP_EOL.'<fg=blue>'.LoomManager::FILLED_LOGO.'</>'.PHP_EOL);
+                        $command->info(Loom::getLogo());
                     })
                     ->copyAndRegisterServiceProviderInApp()
                     ->askToStarRepoOnGitHub('loomkit/loom');

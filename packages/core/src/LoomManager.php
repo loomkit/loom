@@ -41,6 +41,11 @@ TXT;
         return $this->version;
     }
 
+    public function getLogo(string $color = 'blue', bool $filled = true): string
+    {
+        return PHP_EOL."<fg=$color>".($filled ? self::FILLED_LOGO : self::LOGO).'</>'.PHP_EOL;
+    }
+
     private function resolveVersion(): string
     {
         try {
