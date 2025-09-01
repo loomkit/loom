@@ -6,35 +6,21 @@ namespace Loom\Installer;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;
-use Illuminate\Support\ProcessUtils;
-use Illuminate\Support\Str;
-use Laravel\Prompts\ConfirmPrompt;
-use Laravel\Prompts\MultiSelectPrompt;
-use Laravel\Prompts\PasswordPrompt;
-use Laravel\Prompts\Prompt;
-use Laravel\Prompts\SelectPrompt;
-use Laravel\Prompts\SuggestPrompt;
-use Laravel\Prompts\TextPrompt;
+use Laravel\Installer\Console\NewCommand as BaseCommand;
 use Loom\LoomManager;
+use Override;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
 
 use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 
-class NewCommand extends Command
+class NewCommand extends BaseCommand
 {
-    const DATABASE_DRIVERS = ['mysql', 'mariadb', 'pgsql', 'sqlite', 'sqlsrv'];
-
     /**
      * Configure the command options.
      *
@@ -62,9 +48,10 @@ class NewCommand extends Command
      *
      * @return void
      */
+    #[Override]
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        parent::interact($input, $output);
+        Command::interact($input, $output);
 
         $this->configurePrompts($input, $output);
 
@@ -101,37 +88,9 @@ class NewCommand extends Command
     }
 
     /**
-     * Ensure that the required PHP extensions are installed.
-     *
-     *
-     * @throws \RuntimeException
-     */
-    protected function ensureExtensionsAreAvailable(InputInterface $input, OutputInterface $output): void
-    {
-        $availableExtensions = get_loaded_extensions();
-
-        $missingExtensions = collect([
-            'ctype',
-            'filter',
-            'hash',
-            'mbstring',
-            'openssl',
-            'session',
-            'tokenizer',
-        ])->reject(fn ($extension) => in_array($extension, $availableExtensions));
-
-        if ($missingExtensions->isEmpty()) {
-            return;
-        }
-
-        throw new \RuntimeException(
-            sprintf('The following PHP extensions are required but are not installed: %s', $missingExtensions->join(', ', ', and '))
-        );
-    }
-
-    /**
      * Execute the command.
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->validateDatabaseOption($input);
@@ -274,85 +233,19 @@ class NewCommand extends Command
     }
 
     /**
-     * Return the local machine's default Git branch if set or default to `main`.
-     *
-     * @return string
-     */
-    protected function defaultBranch()
-    {
-        $process = new Process(['git', 'config', '--global', 'init.defaultBranch']);
-
-        $process->run();
-
-        $output = trim($process->getOutput());
-
-        return $process->isSuccessful() && $output ? $output : 'main';
-    }
-
-    /**
      * Configure the default database connection.
      *
      * @return void
      */
+    #[Override]
     protected function configureDefaultDatabaseConnection(string $directory, string $database, string $name)
     {
-        $this->pregReplaceInFile(
-            '/DB_CONNECTION=.*/',
-            'DB_CONNECTION='.$database,
-            $directory.'/.env'
-        );
-
-        $this->pregReplaceInFile(
-            '/DB_CONNECTION=.*/',
-            'DB_CONNECTION='.$database,
-            $directory.'/.env.example'
-        );
-
-        if ($database === 'sqlite') {
-            $environment = file_get_contents($directory.'/.env');
-
-            // If database options aren't commented, comment them for SQLite...
-            if (! str_contains($environment, '# DB_HOST=127.0.0.1')) {
-                $this->commentDatabaseConfigurationForSqlite($directory);
-
-                return;
-            }
-
-            return;
-        }
-
-        // Any commented database configuration options should be uncommented when not on SQLite...
-        $this->uncommentDatabaseConfiguration($directory);
-
-        $defaultPorts = [
-            'pgsql' => '5432',
-            'sqlsrv' => '1433',
-        ];
-
-        if (isset($defaultPorts[$database])) {
-            $this->replaceInFile(
-                'DB_PORT=3306',
-                'DB_PORT='.$defaultPorts[$database],
-                $directory.'/.env'
-            );
-
-            $this->replaceInFile(
-                'DB_PORT=3306',
-                'DB_PORT='.$defaultPorts[$database],
-                $directory.'/.env.example'
-            );
-        }
+        parent::configureDefaultDatabaseConnection($directory, $database, $name);
 
         $this->replaceInFile(
             'DB_DATABASE=loom',
             'DB_DATABASE='.str_replace('-', '_', strtolower($name)),
             $directory.'/.env'
-        );
-
-        $this->replaceInFile(
-            'DB_DATABASE=laravel',
-            'DB_DATABASE='.str_replace('-', '_', strtolower($name)),
-            $directory.'/.env.example'
         );
     }
 
@@ -372,14 +265,13 @@ class NewCommand extends Command
     /**
      * Comment the irrelevant database configuration entries for SQLite applications.
      */
+    #[Override]
     protected function commentDatabaseConfigurationForSqlite(string $directory): void
     {
+        parent::uncommentDatabaseConfiguration($directory);
+
         $defaults = [
-            'DB_HOST=127.0.0.1',
-            'DB_PORT=3306',
             'DB_DATABASE=loom',
-            'DB_USERNAME=root',
-            'DB_PASSWORD=',
         ];
 
         $this->replaceInFile(
@@ -400,15 +292,13 @@ class NewCommand extends Command
      *
      * @return void
      */
+    #[Override]
     protected function uncommentDatabaseConfiguration(string $directory)
     {
+        parent::uncommentDatabaseConfiguration($directory);
+
         $defaults = [
-            '# DB_HOST=127.0.0.1',
-            '# DB_PORT=3306',
             '# DB_DATABASE=loom',
-            '# DB_DATABASE=laravel',
-            '# DB_USERNAME=root',
-            '# DB_PASSWORD=',
         ];
 
         $this->replaceInFile(
@@ -425,138 +315,9 @@ class NewCommand extends Command
     }
 
     /**
-     * Determine the default database connection.
-     *
-     * @return array
-     */
-    protected function promptForDatabaseOptions(string $directory, InputInterface $input)
-    {
-        $defaultDatabase = collect(
-            $databaseOptions = $this->databaseOptions()
-        )->keys()->first();
-
-        if (! $input->getOption('database') && $this->usingStarterKit($input)) {
-            // Starter kits will already be migrated in post composer create-project command...
-            $migrate = false;
-
-            $input->setOption('database', 'sqlite');
-        }
-
-        if (! $input->getOption('database') && $input->isInteractive()) {
-            $input->setOption('database', select(
-                label: 'Which database will your application use?',
-                options: $databaseOptions,
-                default: $defaultDatabase,
-            ));
-
-            if ($input->getOption('database') !== 'sqlite') {
-                $migrate = confirm(
-                    label: 'Default database updated. Would you like to run the default database migrations?'
-                );
-            } else {
-                $migrate = true;
-            }
-        }
-
-        return [$input->getOption('database') ?? $defaultDatabase, $migrate ?? $input->hasOption('database')];
-    }
-
-    /**
-     * Get the available database options.
-     */
-    protected function databaseOptions(): array
-    {
-        return collect([
-            'sqlite' => ['SQLite', extension_loaded('pdo_sqlite')],
-            'mysql' => ['MySQL', extension_loaded('pdo_mysql')],
-            'mariadb' => ['MariaDB', extension_loaded('pdo_mysql')],
-            'pgsql' => ['PostgreSQL', extension_loaded('pdo_pgsql')],
-            'sqlsrv' => ['SQL Server', extension_loaded('pdo_sqlsrv')],
-        ])
-            ->sortBy(fn ($database) => $database[1] ? 0 : 1)
-            ->map(fn ($database) => $database[0].($database[1] ? '' : ' (Missing PDO extension)'))
-            ->all();
-    }
-
-    /**
-     * Validate the database driver input.
-     *
-     * @param  \Symfony\Components\Console\Input\InputInterface  $input
-     */
-    protected function validateDatabaseOption(InputInterface $input)
-    {
-        if ($input->getOption('database') && ! in_array($input->getOption('database'), self::DATABASE_DRIVERS)) {
-            throw new \InvalidArgumentException("Invalid database driver [{$input->getOption('database')}]. Possible values are: ".implode(', ', self::DATABASE_DRIVERS).'.');
-        }
-    }
-
-    /**
-     * Create a Git repository and commit the base Loom skeleton.
-     *
-     * @return void
-     */
-    protected function createRepository(string $directory, InputInterface $input, OutputInterface $output)
-    {
-        $branch = $input->getOption('branch') ?: $this->defaultBranch();
-
-        $commands = [
-            'git init -q',
-            'git add .',
-            'git commit -q -m "Set up a fresh Loom app"',
-            "git branch -M {$branch}",
-        ];
-
-        $this->runCommands($commands, $input, $output, workingPath: $directory);
-    }
-
-    /**
-     * Commit any changes in the current working directory.
-     *
-     * @return void
-     */
-    protected function commitChanges(string $message, string $directory, InputInterface $input, OutputInterface $output)
-    {
-        if (! $input->getOption('git') && $input->getOption('github') === false) {
-            return;
-        }
-
-        $commands = [
-            'git add .',
-            "git commit -q -m \"$message\"",
-        ];
-
-        $this->runCommands($commands, $input, $output, workingPath: $directory);
-    }
-
-    /**
-     * Create a GitHub repository and push the git log to it.
-     *
-     * @return void
-     */
-    protected function pushToGitHub(string $name, string $directory, InputInterface $input, OutputInterface $output)
-    {
-        $process = new Process(['gh', 'auth', 'status']);
-        $process->run();
-
-        if (! $process->isSuccessful()) {
-            $output->writeln('  <bg=yellow;fg=black> WARN </> Make sure the "gh" CLI tool is installed and that you\'re authenticated to GitHub. Skipping...'.PHP_EOL);
-
-            return;
-        }
-
-        $name = $input->getOption('organization') ? $input->getOption('organization')."/$name" : $name;
-        $flags = $input->getOption('github') ?: '--private';
-
-        $commands = [
-            "gh repo create {$name} --source=. --push {$flags}",
-        ];
-
-        $this->runCommands($commands, $input, $output, workingPath: $directory, env: ['GIT_TERMINAL_PROMPT' => 0]);
-    }
-
-    /**
      * Configure the Composer "dev" script.
      */
+    #[Override]
     protected function configureComposerDevScript(string $directory, string $pm, string $dlx): void
     {
         $this->composer->modify(function (array $content) {
@@ -572,39 +333,9 @@ class NewCommand extends Command
     }
 
     /**
-     * Verify that the application does not already exist.
-     *
-     * @param  string  $directory
-     * @return void
-     */
-    protected function verifyApplicationDoesntExist($directory)
-    {
-        if ((is_dir($directory) || is_file($directory)) && $directory != getcwd()) {
-            throw new RuntimeException('Application already exists!');
-        }
-    }
-
-    /**
-     * Generate a valid APP_URL for the given application name.
-     *
-     * @param  string  $name
-     * @param  string  $directory
-     * @return string
-     */
-    protected function generateAppUrl($name, $directory)
-    {
-        if (! $this->isParkedOnHerdOrValet($directory)) {
-            return 'http://localhost:8000';
-        }
-
-        $hostname = mb_strtolower($name).'.'.$this->getTld();
-
-        return $this->canResolveHostname($hostname) ? 'http://'.$hostname : 'http://localhost';
-    }
-
-    /**
      * Get the starter kit repository, if any.
      */
+    #[Override]
     protected function getStarterKit(InputInterface $input): ?string
     {
         return $input->getOption('using');
@@ -617,296 +348,5 @@ class NewCommand extends Command
     {
         return $this->usingStarterKit($input) &&
                str_starts_with($this->getStarterKit($input), 'loomkit/');
-    }
-
-    /**
-     * Determine if a starter kit is being used.
-     *
-     * @return bool
-     */
-    protected function usingStarterKit(InputInterface $input)
-    {
-        return $input->getOption('using');
-    }
-
-    /**
-     * Get the TLD for the application.
-     *
-     * @return string
-     */
-    protected function getTld()
-    {
-        return $this->runOnValetOrHerd('tld') ?: 'test';
-    }
-
-    /**
-     * Determine whether the given hostname is resolvable.
-     *
-     * @param  string  $hostname
-     * @return bool
-     */
-    protected function canResolveHostname($hostname)
-    {
-        return gethostbyname($hostname.'.') !== $hostname.'.';
-    }
-
-    /**
-     * Get the installation directory.
-     *
-     * @return string
-     */
-    protected function getInstallationDirectory(string $name)
-    {
-        return $name !== '.' ? getcwd().'/'.$name : '.';
-    }
-
-    /**
-     * Get the version that should be downloaded.
-     *
-     * @return string
-     */
-    protected function getVersion(InputInterface $input)
-    {
-        if ($input->getOption('dev')) {
-            return 'dev-master';
-        }
-
-        return '';
-    }
-
-    /**
-     * Get the composer command for the environment.
-     *
-     * @return string
-     */
-    protected function findComposer()
-    {
-        return implode(' ', $this->composer->findComposer());
-    }
-
-    /**
-     * Get the path to the appropriate PHP binary.
-     *
-     * @return string
-     */
-    protected function phpBinary()
-    {
-        $phpBinary = function_exists('Illuminate\Support\php_binary')
-            ? \Illuminate\Support\php_binary()
-            : (new PhpExecutableFinder)->find(false);
-
-        return $phpBinary !== false
-            ? ProcessUtils::escapeArgument($phpBinary)
-            : 'php';
-    }
-
-    /**
-     * Run the given commands.
-     *
-     * @param  array  $commands
-     * @return \Symfony\Component\Process\Process
-     */
-    protected function runCommands($commands, InputInterface $input, OutputInterface $output, ?string $workingPath = null, array $env = [])
-    {
-        if (! $output->isDecorated()) {
-            $commands = array_map(function ($value) {
-                if (Str::startsWith($value, ['chmod', 'git', $this->phpBinary().' ./vendor/bin/pest'])) {
-                    return $value;
-                }
-
-                return $value.' --no-ansi';
-            }, $commands);
-        }
-
-        if ($input->getOption('quiet')) {
-            $commands = array_map(function ($value) {
-                if (Str::startsWith($value, ['chmod', 'git', $this->phpBinary().' ./vendor/bin/pest'])) {
-                    return $value;
-                }
-
-                return $value.' --quiet';
-            }, $commands);
-        }
-
-        $process = Process::fromShellCommandline(implode(' && ', $commands), $workingPath, $env, null, null);
-
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            try {
-                $process->setTty(true);
-            } catch (RuntimeException $e) {
-                $output->writeln('  <bg=yellow;fg=black> WARN </> '.$e->getMessage().PHP_EOL);
-            }
-        }
-
-        $process->run(function ($type, $line) use ($output) {
-            $output->write('    '.$line);
-        });
-
-        return $process;
-    }
-
-    /**
-     * Replace the given file.
-     *
-     * @return void
-     */
-    protected function replaceFile(string $replace, string $file)
-    {
-        $stubs = dirname(__DIR__).'/stubs';
-
-        file_put_contents(
-            $file,
-            file_get_contents("$stubs/$replace"),
-        );
-    }
-
-    /**
-     * Replace the given string in the given file.
-     *
-     * @return void
-     */
-    protected function replaceInFile(string|array $search, string|array $replace, string $file)
-    {
-        file_put_contents(
-            $file,
-            str_replace($search, $replace, file_get_contents($file))
-        );
-    }
-
-    /**
-     * Replace the given string in the given file using regular expressions.
-     *
-     * @param  string|array  $search
-     * @param  string|array  $replace
-     * @return void
-     */
-    protected function pregReplaceInFile(string $pattern, string $replace, string $file)
-    {
-        file_put_contents(
-            $file,
-            preg_replace($pattern, $replace, file_get_contents($file))
-        );
-    }
-
-    /**
-     * Delete the given file.
-     *
-     * @return void
-     */
-    protected function deleteFile(string $file)
-    {
-        unlink($file);
-    }
-
-    /**
-     * Configure the prompt fallbacks.
-     *
-     * @return void
-     */
-    protected function configurePrompts(InputInterface $input, OutputInterface $output)
-    {
-        Prompt::fallbackWhen(! $input->isInteractive() || PHP_OS_FAMILY === 'Windows');
-
-        TextPrompt::fallbackUsing(fn (TextPrompt $prompt) => $this->promptUntilValid(
-            fn () => (new SymfonyStyle($input, $output))->ask($prompt->label, $prompt->default ?: null) ?? '',
-            $prompt->required,
-            $prompt->validate,
-            $output
-        ));
-
-        PasswordPrompt::fallbackUsing(fn (PasswordPrompt $prompt) => $this->promptUntilValid(
-            fn () => (new SymfonyStyle($input, $output))->askHidden($prompt->label) ?? '',
-            $prompt->required,
-            $prompt->validate,
-            $output
-        ));
-
-        ConfirmPrompt::fallbackUsing(fn (ConfirmPrompt $prompt) => $this->promptUntilValid(
-            fn () => (new SymfonyStyle($input, $output))->confirm($prompt->label, $prompt->default),
-            $prompt->required,
-            $prompt->validate,
-            $output
-        ));
-
-        SelectPrompt::fallbackUsing(fn (SelectPrompt $prompt) => $this->promptUntilValid(
-            fn () => (new SymfonyStyle($input, $output))->choice($prompt->label, $prompt->options, $prompt->default),
-            false,
-            $prompt->validate,
-            $output
-        ));
-
-        MultiSelectPrompt::fallbackUsing(function (MultiSelectPrompt $prompt) use ($input, $output) {
-            if ($prompt->default !== []) {
-                return $this->promptUntilValid(
-                    fn () => (new SymfonyStyle($input, $output))->choice($prompt->label, $prompt->options, implode(',', $prompt->default), true),
-                    $prompt->required,
-                    $prompt->validate,
-                    $output
-                );
-            }
-
-            return $this->promptUntilValid(
-                fn () => collect((new SymfonyStyle($input, $output))->choice(
-                    $prompt->label,
-                    array_is_list($prompt->options)
-                        ? ['None', ...$prompt->options]
-                        : ['none' => 'None', ...$prompt->options],
-                    'None',
-                    true)
-                )->reject(array_is_list($prompt->options) ? 'None' : 'none')->all(),
-                $prompt->required,
-                $prompt->validate,
-                $output
-            );
-        });
-
-        SuggestPrompt::fallbackUsing(fn (SuggestPrompt $prompt) => $this->promptUntilValid(
-            function () use ($prompt, $input, $output) {
-                $question = new Question($prompt->label, $prompt->default);
-
-                is_callable($prompt->options)
-                    ? $question->setAutocompleterCallback($prompt->options)
-                    : $question->setAutocompleterValues($prompt->options);
-
-                return (new SymfonyStyle($input, $output))->askQuestion($question);
-            },
-            $prompt->required,
-            $prompt->validate,
-            $output
-        ));
-    }
-
-    /**
-     * Prompt the user until the given validation callback passes.
-     *
-     * @param  \Closure  $prompt
-     * @param  bool|string  $required
-     * @param  \Closure|null  $validate
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @return mixed
-     */
-    protected function promptUntilValid($prompt, $required, $validate, $output)
-    {
-        while (true) {
-            $result = $prompt();
-
-            if ($required && ($result === '' || $result === [] || $result === false)) {
-                $output->writeln('<error>'.(is_string($required) ? $required : 'Required.').'</error>');
-
-                continue;
-            }
-
-            if ($validate) {
-                $error = $validate($result);
-
-                if (is_string($error) && strlen($error) > 0) {
-                    $output->writeln("<error>{$error}</error>");
-
-                    continue;
-                }
-            }
-
-            return $result;
-        }
     }
 }

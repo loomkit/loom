@@ -24,11 +24,9 @@
     "require": {
         "php": "^8.3",
         "illuminate/support": "^12.26",
-        "laravel/prompts": "^0.3",
+        "laravel/installer": "^5.17",
         "loomkit/core": "self.version",
-        "nunomaduro/termwind": "^2.3",
-        "symfony/console": "^7.3",
-        "symfony/process": "^7.3"
+        "symfony/console": "^7.3"
     },
     "autoload": {
         "psr-4": {
