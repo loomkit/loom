@@ -26,6 +26,7 @@ class NewCommand extends BaseCommand
      *
      * @return void
      */
+    #[Override]
     protected function configure()
     {
         $this
@@ -339,6 +340,16 @@ class NewCommand extends BaseCommand
     protected function getStarterKit(InputInterface $input): ?string
     {
         return $input->getOption('using');
+    }
+
+    /**
+     * Determine if a starter kit is being used.
+     *
+     * @return bool
+     */
+    protected function usingStarterKit(InputInterface $input)
+    {
+        return (bool) $input->getOption('using');
     }
 
     /**
