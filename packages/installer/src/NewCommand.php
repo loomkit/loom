@@ -199,7 +199,7 @@ class NewCommand extends BaseCommand
                 $packageDlx = 'yarn dlx';
             }
 
-            $packageBuild = "{$pacakeRun} build";
+            $packageBuild = "{$packageRun} build";
 
             $this->configureComposerDevScript($directory, $packageRun, $packageDlx);
 
@@ -318,9 +318,9 @@ class NewCommand extends BaseCommand
      * Configure the Composer "dev" script.
      */
     #[Override]
-    protected function configureComposerDevScript(string $directory, string $pm, string $dlx): void
+    protected function configureComposerDevScript(string $directory, string $run = 'npm', string $dlx = 'npx'): void
     {
-        $this->composer->modify(function (array $content) {
+        $this->composer->modify(function (array $content) use ($run, $dlx): array {
             if (windows_os()) {
                 $content['scripts']['dev'] = [
                     'Composer\\Config::disableProcessTimeout',
