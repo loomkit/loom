@@ -1,10 +1,10 @@
 {
-    "name": "loomkit/core",
-    "description": "Loom Laravel starter-kit core functionality.",
+    "name": "loomkit/installer",
+    "description": "Loom application installer.",
     "homepage": "https://loomkit.github.io",
     "license": "MIT",
     "keywords": [
-        "laravel",
+        "installer",
         "loom",
         "loomkit",
         "php"
@@ -24,27 +24,26 @@
     "require": {
         "php": "^8.3",
         "illuminate/support": "^12.26",
-        "illuminate/console": "^12.26",
-        "spatie/laravel-package-tools": "^1.92"
+        "laravel/prompts": "^0.3",
+        "loomkit/core": "self.version",
+        "nunomaduro/termwind": "^2.3",
+        "symfony/console": "^7.3",
+        "symfony/process": "^7.3"
     },
     "autoload": {
         "psr-4": {
-            "Loom\\": "src/"
+            "Loom\\Installer\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Loom\\Tests\\": "tests/"
+            "Loom\\Installer\\Tests\\": "tests/"
         }
     },
+    "bin": [
+        "bin/loom"
+    ],
     "extra": {
-        "laravel": {
-            "providers": ["Loom\\LoomServiceProvider"],
-            "aliases": {
-                "Loom": "Loom\\Loom"
-            },
-            "dont-discover": []
-        },
         "branch-alias": {
             "dev-main": "0.x-dev"
         }

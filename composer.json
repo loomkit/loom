@@ -23,7 +23,12 @@
     },
     "require": {
         "php": "^8.3",
-        "illuminate/console": "^12.24",
+        "illuminate/console": "^12.26",
+        "illuminate/support": "^12.26",
+        "laravel/prompts": "^0.3",
+        "nunomaduro/termwind": "^2.3",
+        "symfony/console": "^7.3",
+        "symfony/process": "^7.3",
         "spatie/laravel-package-tools": "^1.92"
     },
     "require-dev": {
@@ -33,7 +38,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Loom\\": "packages/core/src/"
+            "Loom\\": "packages/core/src/",
+            "Loom\\Installer\\": "packages/installer/src/"
         }
     },
     "autoload-dev": {
@@ -77,8 +83,12 @@
         "verify": "phpinsights analyse"
     },
     "replace": {
-        "loom/core": "self.version"
+        "loom/core": "self.version",
+        "loom/installer": "self.version"
     },
+    "bin": [
+        "bin/loom"
+    ],
     "extra": {
         "laravel": {
             "providers": ["Loom\\LoomServiceProvider"],

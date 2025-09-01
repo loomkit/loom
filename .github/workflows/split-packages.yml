@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ["core"] # 🔮 Add more packages here...
+        package: ["core", "installer"] # 🔮 Add more packages here...
 
     steps:
       - name: 📥 Checkout
