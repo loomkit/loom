@@ -44,20 +44,8 @@
                 "Loom": "Loom\\Loom"
             },
             "dont-discover": []
-        },
-        "branch-alias": {
-            "dev-main": "0.x-dev"
         }
     },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
