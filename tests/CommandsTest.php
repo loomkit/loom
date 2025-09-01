@@ -10,8 +10,9 @@ use Loom\Commands\MakeFieldCommand;
 
 test('install command', function () {
     $this->artisan('loom:install')
+        ->expectsOutput('📥 Installing Loom...')
         ->expectsQuestion('Would you like to star our repo on GitHub?', true)
-        ->expectsOutput('loom has been installed!')
+        ->expectsOutput('Loom has been installed! ✅')
         ->assertSuccessful();
 });
 

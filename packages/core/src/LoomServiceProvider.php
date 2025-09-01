@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Loom;
 
+use Loom\Commands\InstallCommand;
 use Loom\Commands\MakeColumnCommand;
 use Loom\Commands\MakeFieldCommand;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LoomServiceProvider extends PackageServiceProvider
+class LoomServiceProvider extends LoomPackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

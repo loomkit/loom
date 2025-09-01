@@ -13,6 +13,10 @@ final class LoomManager
 {
     public const string VERSION = '0.0.0';
 
+    public const string NAME = 'Loom';
+
+    public const string ICON = '🧵';
+
     public const string LOGO = <<<TXT
   _
  | |    ___   ___  _ __ ___
@@ -39,6 +43,21 @@ TXT;
         }
 
         return $this->version;
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getIcon(): string
+    {
+        return self::ICON;
+    }
+
+    public function getNiceName(): string
+    {
+        return $this->getName().' '.$this->getIcon();
     }
 
     public function getLogo(string $color = 'blue', bool $filled = true): string
