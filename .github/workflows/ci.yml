@@ -26,7 +26,7 @@ jobs:
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -42,7 +42,7 @@ jobs:
           tools: composer:v2, php-cs-fixer, phpunit, vimeo/psalm
           coverage: pcov
 
-      - name: 🍱 Install Composer dependencies
+      - name: 📦️ Install Composer dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
       - name: ✅ Check code lint
