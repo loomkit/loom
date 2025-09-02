@@ -94,7 +94,7 @@
         "laravel": {
             "providers": ["Loom\\LoomServiceProvider"],
             "aliases": {
-                "Loom": "Loom\\LoomManager"
+                "Loom": "Loom\\Loom"
             },
             "dont-discover": []
         },
