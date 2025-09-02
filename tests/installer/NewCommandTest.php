@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Loom\Installer\Application;
 use Loom\Installer\NewCommand;
+use Loom\LoomManager;
 use Symfony\Component\Console\Tester\CommandTester;
 
 uses(\Loom\Tests\Installer\TestCase::class);
@@ -24,10 +25,10 @@ it('can scaffold a new loom app', function () {
     $this->assertFileExists($scaffoldDirectory.'/.env');
 });
 
-test('on at least laravel 12', function () {
+test('on at least loom'.LoomManager::VERSION, function () {
     $command = new NewCommand;
 
-    $onLoomStarterKit = $command->usingLaravelVersionOrNewer(12, __DIR__.'/fixtures/starter');
+    $onLoomStarterKit = $command->usingLoomVersionOrNewer((int) LoomManager::VERSION, __DIR__.'/fixtures/starter');
 
     $this->assertTrue($onLoomStarterKit);
 
