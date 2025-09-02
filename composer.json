@@ -44,7 +44,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Loom\\Tests\\": "tests/"
+            "Loom\\Tests\\": "tests/",
+            "Loom\\Tests\\Installer\\": "tests/installer/"
         }
     },
     "scripts": {

@@ -11,7 +11,7 @@
 |
 */
 
-uses(Loom\Tests\TestCase::class)->in('');
+uses(Loom\Tests\TestCase::class)->in('core');
 
 /*
 |--------------------------------------------------------------------------
