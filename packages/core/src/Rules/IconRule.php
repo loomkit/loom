@@ -25,7 +25,11 @@ class IconRule implements ValidationRule
         $icon_type = config('sikessem.ui.components.icon.attributes.type', 'solid');
         $icon_path = sikessem_ui_path("resources/icons/$icon_size/$icon_type/$icon_name.svg");
         if (! is_file($icon_path)) {
-            $fail(__("Aucune icône nommée $icon_name de taille $icon_size n'existe pour le type $icon_type."));
+            $fail(__('loom::rules.icon', [
+                'name' => $icon_name,
+                'type' => $icon_type,
+                'path' => $icon_path,
+            ]));
         }
     }
 }
