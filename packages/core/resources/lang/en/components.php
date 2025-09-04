@@ -5,4 +5,5 @@ return [
     'slug' => 'Slug',
     'content' => 'Content',
     'description' => 'Description',
+    'icon' => 'Icon',
 ];
