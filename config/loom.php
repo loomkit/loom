@@ -1,1 +1,3 @@
-/labs/melanoderme.com/packages/loom/packages/core/config/loom.php
+<?php
+
+return require __DIR__.'../packages/core/config/loom.php';
