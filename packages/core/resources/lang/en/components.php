@@ -6,4 +6,6 @@ return [
     'content' => 'Content',
     'description' => 'Description',
     'icon' => 'Icon',
+    'visible' => 'Visible',
+    'available' => 'Available',
 ];
