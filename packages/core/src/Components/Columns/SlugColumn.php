@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Loom\Components\Columns;
 
 use Filament\Tables\Columns\TextColumn;
