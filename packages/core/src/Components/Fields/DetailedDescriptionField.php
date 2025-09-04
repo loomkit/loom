@@ -6,7 +6,7 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\RichEditor;
 
-class ContentField
+class DetailedDescriptionField
 {
     public static function make(?string $name = null): RichEditor
     {
@@ -15,6 +15,6 @@ class ContentField
         return RichEditor::make($name)
             ->minLength(8)
             ->columnSpanFull()
-            ->label(__('loom::components.content'));
+            ->label(__('loom::components.detailed_description'));
     }
 }
