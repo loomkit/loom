@@ -1,0 +1,18 @@
+<?php
+
+namespace Loom\Components\Fields;
+
+use Filament\Forms\Components\RichEditor;
+
+class ContentField
+{
+    public static function make(?string $name = null): RichEditor
+    {
+        $name ??= 'content';
+
+        return RichEditor::make($name)
+            ->minLength(8)
+            ->columnSpanFull()
+            ->label(__('Contenu'));
+    }
+}
