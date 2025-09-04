@@ -16,6 +16,7 @@ class LoomServiceProvider extends LoomPackageServiceProvider
         $package
             ->name('loom')
             ->hasConfigFile()
+            ->hasTranslations()
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
