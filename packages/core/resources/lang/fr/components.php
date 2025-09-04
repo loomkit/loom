@@ -2,4 +2,5 @@
 
 return [
     'name' => 'Nom',
+    'slug' => 'Slug',
 ];
