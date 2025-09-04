@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Loom\Components\Columns;
+
+use Filament\Tables\Columns\TextColumn;
+
+class DescriptionColumn
+{
+    public static function make(?string $name = null): TextColumn
+    {
+        $name ??= 'description';
+
+        return TextColumn::make($name)
+            ->sortable()
+            ->searchable()
+            ->wrap()
+            ->words(12)
+            ->limit(48)
+            ->lineClamp(1)
+            ->label(__('Description'));
+    }
+}
