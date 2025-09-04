@@ -15,6 +15,6 @@ class ContentField
         return RichEditor::make($name)
             ->minLength(8)
             ->columnSpanFull()
-            ->label(__('Contenu'));
+            ->label(__('loom::components.content'));
     }
 }

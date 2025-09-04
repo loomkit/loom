@@ -19,6 +19,6 @@ class DescriptionColumn
             ->words(12)
             ->limit(48)
             ->lineClamp(1)
-            ->label(__('Description'));
+            ->label(__('loom::components.description'));
     }
 }

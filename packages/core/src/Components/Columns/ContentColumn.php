@@ -17,6 +17,6 @@ class ContentColumn
             ->searchable()
             ->wrap()
             ->limit(64)
-            ->label(__('Contenu'));
+            ->label(__('loom::components.content'));
     }
 }

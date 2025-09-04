@@ -17,6 +17,6 @@ class DescriptionField
             ->minLength(2)
             ->maxLength(1024)
             ->columnSpanFull()
-            ->label(__('Description'));
+            ->label(__('loom::components.description'));
     }
 }
