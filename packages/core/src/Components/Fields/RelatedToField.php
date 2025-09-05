@@ -24,7 +24,10 @@ class RelatedToField
         if (Str::endsWith($related, '_ids')) {
             $related = Str::beforeLast($related, '_ids');
         }
-        $label = Str::title(Str::snake($related, ' '));
+        $label = $related;
+        if (($_label = (string) __("loom::components.{$label}")) !== $label) {
+            $label = "loom::components.{$label}";
+        }
         $related = Str::camel($related);
 
         return Select::make(Str::snake($name))
