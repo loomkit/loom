@@ -19,10 +19,10 @@ class RelatedToField
         $name ??= 'related_to';
         $related = Str::snake($name);
         if (Str::endsWith($related, '_id')) {
-            $related = Str::beforeLast($related, '_id');
+            $related = Str::singular(Str::beforeLast($related, '_id'));
         }
         if (Str::endsWith($related, '_ids')) {
-            $related = Str::beforeLast($related, '_ids');
+            $related = Str::plural(Str::beforeLast($related, '_ids'));
         }
         $label = $related;
         if (($_label = (string) __("loom::components.{$label}")) !== $label) {
