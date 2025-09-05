@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Loom\Components\Fields;
+namespace App\Loom\Fields;
 
+use App\Rules\IconRule;
 use Filament\Forms\Components\Select;
 use Filament\Support\Icons\Heroicon;
-use Loom\Rules\IconRule;
 
 class IconField
 {
@@ -18,6 +18,6 @@ class IconField
             ->options(array_column(Heroicon::cases(), 'value', 'value'))
             ->rule(new IconRule)
             ->searchable()
-            ->label(__('loom::components.icon'));
+            ->label(__('Icon'));
     }
 }
