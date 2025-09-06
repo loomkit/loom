@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'icon' => 'Aucune icône nommée :name de taille :size n\'existe pour le type :type.',
+    'icon' => 'Aucune icône de Heroicon ne correspond à :icon.',
 ];
