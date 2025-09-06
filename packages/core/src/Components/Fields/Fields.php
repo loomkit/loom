@@ -8,6 +8,7 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use Filament\Forms\Components\Field as FormField;
+use Filament\Schemas\Components\Component as SchemaComponent;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Grid;
@@ -84,5 +85,48 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
     public function count(): int
     {
         return count($this->schema);
+    }
+
+    public function __get(string $name): ?FormField
+    {
+        return $this->get($name);
+    }
+
+    public function __set(string $name, FormField $field): void
+    {
+        $this->set($name, $field);
+    }
+
+    public function __isset(string $name): bool
+    {
+        return $this->has($name);
+    }
+
+    public function __unset(string $name): void
+    {
+        $this->remove($name);
+    }
+
+    /**
+     * @param  array{}|array{0: FormField}  $fields
+     */
+    public function __call(string $name, array $fields): ?FormField
+    {
+        if (isset($fields[0])) {
+            $this->set($name, $fields[0]);
+        }
+
+        return $this->get($name);
+    }
+
+    public function __invoke(string $layout = 'group'): SchemaComponent
+    {
+        return match (strtolower($layout)) {
+            'group' => $this->group(),
+            'fieldset' => $this->fieldset(),
+            'grid' => $this->grid(),
+            'flex' => $this->flex(),
+            default => $this->group()
+        };
     }
 }
