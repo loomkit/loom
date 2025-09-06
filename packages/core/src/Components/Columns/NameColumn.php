@@ -6,7 +6,7 @@ namespace Loom\Components\Columns;
 
 use Filament\Tables\Columns\TextColumn;
 
-class NameColumn
+class NameColumn extends Column
 {
     public static function make(?string $name = null): TextColumn
     {

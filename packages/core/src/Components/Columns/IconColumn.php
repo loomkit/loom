@@ -6,7 +6,7 @@ namespace Loom\Components\Columns;
 
 use Filament\Tables\Columns\IconColumn as FilamentIconColumn;
 
-class IconColumn
+class IconColumn extends Column
 {
     public static function make(?string $name = null): FilamentIconColumn
     {

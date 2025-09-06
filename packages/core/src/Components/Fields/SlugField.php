@@ -6,7 +6,7 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\TextInput;
 
-class SlugField
+class SlugField extends Field
 {
     public static function make(?string $name = null): TextInput
     {

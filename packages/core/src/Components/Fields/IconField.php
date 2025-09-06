@@ -8,7 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Support\Icons\Heroicon;
 use Loom\Rules\IconRule;
 
-class IconField
+class IconField extends Field
 {
     public static function make(?string $name = null): Select
     {

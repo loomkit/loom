@@ -6,7 +6,7 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\Textarea;
 
-class DescriptionField
+class DescriptionField extends Field
 {
     public static function make(?string $name = null): Textarea
     {

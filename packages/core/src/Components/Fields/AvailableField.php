@@ -6,7 +6,7 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\Toggle;
 
-class AvailableField
+class AvailableField extends Field
 {
     public static function make(?string $name = null): Toggle
     {

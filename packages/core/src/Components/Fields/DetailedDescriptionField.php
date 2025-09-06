@@ -6,7 +6,7 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\RichEditor;
 
-class DetailedDescriptionField
+class DetailedDescriptionField extends Field
 {
     public static function make(?string $name = null): RichEditor
     {

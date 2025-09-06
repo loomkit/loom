@@ -8,7 +8,7 @@ use Closure;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Str;
 
-class RelatedToField
+class RelatedToField extends Field
 {
     public static function make(
         ?string $name = null,
