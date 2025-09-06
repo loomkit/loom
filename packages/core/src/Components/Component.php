@@ -10,5 +10,5 @@ use Livewire\Component as LivewireComponent;
 
 abstract class Component
 {
-    abstract public static function make(): FilamentComponent|LivewireComponent|BladeComponent;
+    abstract public static function make(): FilamentComponent|LivewireComponent|BladeComponent|Component;
 }
