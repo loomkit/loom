@@ -25,6 +25,7 @@
         "php": "^8.3",
         "illuminate/support": "^12.26",
         "illuminate/console": "^12.26",
+        "sikessem/ui": "^0.9",
         "spatie/laravel-package-tools": "^1.92"
     },
     "autoload": {

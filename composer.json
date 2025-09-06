@@ -28,8 +28,9 @@
         "laravel/installer": "^5.17",
         "laravel/prompts": "^0.3",
         "nunomaduro/termwind": "^2.3",
-        "symfony/console": "^7.3",
-        "spatie/laravel-package-tools": "^1.92"
+        "sikessem/ui": "^0.9",
+        "spatie/laravel-package-tools": "^1.92",
+        "symfony/console": "^7.3"
     },
     "require-dev": {
         "filament/filament": "^4.0",
