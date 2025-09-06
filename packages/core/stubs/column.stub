@@ -6,7 +6,7 @@ namespace {{ namespace }};
 
 use Filament\Tables\Columns\{{ column }};
 
-class {{ class }}
+class {{ class }} extends {{ base }}
 {
     public static function make(?string $name = null): {{ column }}
     {

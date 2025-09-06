@@ -6,7 +6,7 @@ namespace {{ namespace }};
 
 use Filament\Forms\Components\{{ component }};
 
-class {{ class }}
+class {{ class }} extends {{ base }}
 {
     public static function make(?string $name = null): {{ component }}
     {

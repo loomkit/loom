@@ -12,5 +12,5 @@ class MakeColumnCommand extends Command
 {
     protected $hidden = true;
 
-    protected $signature = 'loom:column {name} {column} {label?} {--f|force}';
+    protected $signature = 'loom:column {name} {column} {label?} {--base=} {--f|force}';
 }

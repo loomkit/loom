@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 #[AsCommand(name: 'make:loom-column')]
 class MakeColumnCommand extends MakeCommand
 {
-    protected $signature = 'make:loom-column {name} {column} {label?} {--f|force}';
+    protected $signature = 'make:loom-column {name} {column} {label?} {--base=} {--f|force}';
 
     protected $description = 'Create a new column';
 
@@ -30,9 +30,9 @@ class MakeColumnCommand extends MakeCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the '.strtolower($this->type)],
-            ['column', InputArgument::REQUIRED, 'The table column of the '.strtolower($this->type)],
-            ['label', InputArgument::OPTIONAL, 'The label of the '.strtolower($this->type)],
+            ...parent::getArguments(),
+            ['column', InputArgument::REQUIRED, 'The Filament table column of the '.$this->type],
+            ['label', InputArgument::OPTIONAL, 'The label of the '.$this->type],
         ];
     }
 
@@ -50,6 +50,7 @@ class MakeColumnCommand extends MakeCommand
         $stub = parent::buildClass($name);
 
         $this
+            ->replaceArgument($stub, 'base')
             ->replaceArgument($stub, 'column')
             ->replaceArgument($stub, 'name')
             ->replaceArgument($stub, 'label');

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 #[AsCommand(name: 'make:loom-field')]
 class MakeFieldCommand extends MakeCommand
 {
-    protected $signature = 'make:loom-field {name} {component} {label?} {--f|force}';
+    protected $signature = 'make:loom-field {name} {component} {label?} {--base=} {--f|force}';
 
     protected $description = 'Create a new field';
 
@@ -30,9 +30,9 @@ class MakeFieldCommand extends MakeCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the '.strtolower($this->type)],
-            ['component', InputArgument::REQUIRED, 'The form component of the '.strtolower($this->type)],
-            ['label', InputArgument::OPTIONAL, 'The label of the '.strtolower($this->type)],
+            ...parent::getArguments(),
+            ['component', InputArgument::REQUIRED, 'The Filament form component of the '.$this->type],
+            ['label', InputArgument::OPTIONAL, 'The label of the '.$this->type],
         ];
     }
 
@@ -50,6 +50,7 @@ class MakeFieldCommand extends MakeCommand
         $stub = parent::buildClass($name);
 
         $this
+            ->replaceArgument($stub, 'base')
             ->replaceArgument($stub, 'component')
             ->replaceArgument($stub, 'name')
             ->replaceArgument($stub, 'label');

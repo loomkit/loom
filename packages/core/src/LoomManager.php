@@ -45,6 +45,11 @@ TXT;
         return $this->version;
     }
 
+    public function getNamespace(): string
+    {
+        return __NAMESPACE__.'\\';
+    }
+
     public function getName(): string
     {
         return self::NAME;

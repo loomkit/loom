@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static string getVersion()
+ * @method static string getNamespace()
  * @method static string getName()
  * @method static string getIcon()
  * @method static string getNiceName()

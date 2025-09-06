@@ -6,10 +6,27 @@ namespace Loom\Commands;
 
 use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
+use Loom\Loom;
+use Symfony\Component\Console\Input\InputArgument;
 
 abstract class MakeCommand extends GeneratorCommand
 {
     use CreatesMatchingTest;
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    #[\Override]
+    protected function getArguments()
+    {
+        return [
+            ...parent::getArguments(),
+            ['base', InputArgument::REQUIRED, 'The base '.strtolower($this->type).' to extend'],
+        ];
+    }
 
     /**
      * Resolve the fully-qualified path to the stub.
@@ -26,23 +43,37 @@ abstract class MakeCommand extends GeneratorCommand
     protected function replaceArgument(string &$stub, string $name, string $default = 'null'): static
     {
         $subject = $name === 'name'
-        ? str($this->getNameInput())->beforeLast(ucfirst($this->type))->snake()
-        : str($this->argument($name))->trim();
+        ? Str::snake(Str::beforeLast($this->getNameInput(), ucfirst($this->type)))
+        : (
+            $name === 'base'
+            ? '\\'.$this->getBaseInput()
+            : Str::trim($this->argument($name))
+        );
 
-        if ($subject->isEmpty() && $name === 'label') {
-            $subject = str($this->getNameInput())
-                ->beforeLast(ucfirst($this->type))
-                ->snake(' ')
-                ->title();
+        if (empty($subject) && $name === 'label') {
+            $subject = Str::title(Str::snake(
+                Str::beforeLast(
+                    $this->getNameInput(),
+                    ucfirst($this->type)
+                ),
+                ''
+            ));
         }
 
-        if ($subject->isEmpty()) {
+        if (empty($subject)) {
             $subject = $default;
         } elseif (in_array($name, ['name', 'label'])) {
-            $subject = $subject->replace(['\\', '\''], ['\\\\', '\\\''])->wrap('\'');
+            $subject = Str::wrap(
+                Str::replace(
+                    ['\\', '\''],
+                    ['\\\\', '\\\''],
+                    $subject,
+                ),
+                '\''
+            );
         }
 
-        $stub = str_replace(['Dummy'.ucfirst($name), '{{ '.$name.' }}', '{{'.$name.'}}'], (string) $subject, $stub);
+        $stub = str_replace(['Dummy'.ucfirst($name), '{{ '.$name.' }}', '{{'.$name.'}}'], $subject, $stub);
 
         return $this;
     }
@@ -55,13 +86,59 @@ abstract class MakeCommand extends GeneratorCommand
     #[\Override]
     protected function getNameInput()
     {
-        $name = str(parent::getNameInput())->studly();
-        $type = str($this->type)->studly()->toString();
+        $name = Str::studly(parent::getNameInput());
+        $type = Str::studly($this->type);
 
-        if (! $name->endsWith($type)) {
-            $name = $name->append($type);
+        if (! str_ends_with($name, $type)) {
+            $name .= $type;
         }
 
-        return $name->toString();
+        return $name;
+    }
+
+    public function getBaseInput(): string
+    {
+        $base = trim((string) $this->option('base'));
+        $typeClass = Str::studly($this->type);
+        $typeNamespace = Str::plural($typeClass);
+
+        if (! $base) {
+            $base = "Loom\\Components\\{$typeNamespace}\\{$typeClass}";
+        }
+
+        if (class_exists($base)) {
+            return ltrim($base);
+        }
+
+        $rootNamespace = $this->rootNamespace();
+        $loomNamespace = $this->loomNamespace();
+
+        if (Str::startsWith($base, ['\\', $rootNamespace, $loomNamespace])) {
+            $this->warn("Class {$base} does not exists.");
+
+            return ltrim($base, '\\');
+        }
+
+        $baseClass = Str::studly($base);
+        $rootTypeNamespace = $rootNamespace.$loomNamespace.$typeNamespace.'\\';
+        $loomTypeNamespace = $loomNamespace.'Components\\'.$typeNamespace.'\\';
+
+        if (
+            class_exists($class = $rootTypeNamespace.$baseClass) ||
+            class_exists($class = $loomTypeNamespace.$baseClass) ||
+            class_exists($class = $rootTypeNamespace.$baseClass.$typeClass) ||
+            class_exists($class = $loomTypeNamespace.$baseClass.$typeClass)
+        ) {
+            return $class;
+        }
+
+        $this->error("Class {$baseClass} does not exist.");
+
+        return $baseClass;
+    }
+
+    public function loomNamespace(): string
+    {
+        return Loom::getNamespace();
     }
 }

@@ -12,5 +12,5 @@ class MakeFieldCommand extends Command
 {
     protected $hidden = true;
 
-    protected $signature = 'loom:field {name} {component} {label?} {--f|force}';
+    protected $signature = 'loom:field {name} {component} {label?} {--base=} {--f|force}';
 }
