@@ -46,7 +46,14 @@ abstract class MakeCommand extends GeneratorCommand
         ? Str::snake(Str::beforeLast($this->getNameInput(), ucfirst($this->type)))
         : (
             $name === 'base'
-            ? '\\'.$this->getBaseInput()
+            ? (
+                str_starts_with(
+                    $base = $this->getBaseInput(),
+                    $namespace = $this->getDefaultNamespace(rtrim($this->rootNamespace(), '\\')).'\\'
+                )
+                ? Str::after($base, $namespace)
+                : '\\'.$base
+            )
             : Str::trim($this->argument($name))
         );
 
