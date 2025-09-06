@@ -21,8 +21,11 @@ use Loom\Components\Component;
 use Traversable;
 
 /**
- * @implements IteratorAggregate<string, FormField>
- * @implements ArrayAccess<string, FormField>
+ * @template TKey of string
+ * @template TValue of FormField
+ *
+ * @implements IteratorAggregate<TKey, TValue>
+ * @implements ArrayAccess<TKey, TValue>
  */
 abstract class Fields extends Component implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -58,9 +61,7 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
     }
 
     /**
-     * @template T of FormField
-     *
-     * @param  Closure(T $field, string $name): T  $mapper
+     * @param  Closure(TValue $field, TKey $name): TValue  $mapper
      */
     public function map(Closure $mapper): static
     {
@@ -72,7 +73,7 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
     }
 
     /**
-     * @template T of array<string, FormField>
+     * @template T of array<TKey, TValue>
      *
      * @param  Closure(T $fields): T  $pipe
      */
@@ -169,24 +170,37 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
         };
     }
 
-    public function offsetExists(string $name): bool
+    /**
+     * @param  TKey  $offset
+     */
+    public function offsetExists(mixed $offset): bool
     {
-        return $this->has($name);
+        return $this->has($offset);
     }
 
-    public function offsetGet(string $name): ?FormField
+    /**
+     * @param  TKey  $offset
+     */
+    public function offsetGet(mixed $offset): ?FormField
     {
-        return $this->get($name);
+        return $this->get($offset);
     }
 
-    public function offsetSet(string $name, FormField $field): void
+    /**
+     * @param  TKey  $offset
+     * @param  TValue  $value
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->set($name, $field);
+        $this->set($offset, $value);
     }
 
-    public function offsetUnset(string $name): void
+    /**
+     * @param  TKey  $offset
+     */
+    public function offsetUnset(mixed $offset): void
     {
-        $this->remove($name);
+        $this->remove($offset);
     }
 
     public function __unset(string $name): void
