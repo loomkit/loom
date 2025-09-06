@@ -39,6 +39,13 @@ abstract class Fields extends Component
         return $this->schema[$name] ?? null;
     }
 
+    public function remove(string $name): static
+    {
+        unset($this->schema[$name]);
+
+        return $this;
+    }
+
     public function group(): Group
     {
         return Group::make($this->schema);
