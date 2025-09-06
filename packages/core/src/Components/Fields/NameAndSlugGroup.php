@@ -6,8 +6,9 @@ namespace Loom\Components\Fields;
 
 use Filament\Schemas\Components\Group;
 use Illuminate\Support\Str;
+use Loom\Components\Component;
 
-class NameAndSlugGroup
+class NameAndSlugGroup extends Component
 {
     public static function make(?string $name = null, ?string $slug = null): Group
     {
