@@ -25,8 +25,11 @@ class RelatedToField extends Field
             $related = Str::plural(Str::beforeLast($related, '_ids'));
         }
         $label = $related;
-        if (($_label = (string) __("loom::components.{$label}")) !== $label) {
+        $loomLabel = "loom::components.{$label}";
+        if (__($loomLabel) !== $loomLabel) {
             $label = "loom::components.{$label}";
+        } else {
+            $label = Str::title($label);
         }
         $related = Str::camel($related);
 
