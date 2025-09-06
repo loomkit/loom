@@ -57,7 +57,9 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
 
     public function group(): Group
     {
-        return Group::make($this->schema);
+        return Group::make($this->schema)
+            ->columns($this->count())
+            ->columnSpanFull();
     }
 
     public function fieldset(string|Htmlable|Closure|null $label = null): Fieldset
@@ -68,19 +70,26 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
     /**
      * @param  array<string,?int>|int|null  $columns
      */
-    public function grid(array|int|null $columns = 2): Grid
+    public function grid(array|int|null $columns = null): Grid
     {
-        return Grid::make($columns)->schema($this->schema);
+        return Grid::make($columns ?? $this->count())
+            ->schema($this->schema)
+            ->columnSpanFull();
     }
 
     public function flex(): Flex
     {
-        return Flex::make($this->schema);
+        return Flex::make($this->schema)
+            ->columns($this->count())
+            ->columnSpanFull();
     }
 
     public function section(string|Htmlable|Closure|null $heading = null): Section
     {
-        return Section::make($heading)->schema($this->schema);
+        return Section::make($heading)
+            ->schema($this->schema)
+            ->columns($this->count())
+            ->columnSpanFull();
     }
 
     public function getIterator(): Traversable
