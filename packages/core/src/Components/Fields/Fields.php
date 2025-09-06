@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Illuminate\Contracts\Support\Htmlable;
 use IteratorAggregate;
 use Loom\Components\Component;
@@ -77,6 +78,11 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
         return Flex::make($this->schema);
     }
 
+    public function section(string|Htmlable|Closure|null $heading = null): Section
+    {
+        return Section::make($heading)->schema($this->schema);
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->schema);
@@ -126,6 +132,7 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
             'fieldset' => $this->fieldset(),
             'grid' => $this->grid(),
             'flex' => $this->flex(),
+            'flex' => $this->section(),
             default => $this->group()
         };
     }
