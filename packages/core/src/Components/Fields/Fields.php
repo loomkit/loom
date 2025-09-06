@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Loom\Components\Fields;
 
+use ArrayIterator;
 use Closure;
+use Countable;
 use Filament\Forms\Components\Field as FormField;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Illuminate\Contracts\Support\Htmlable;
+use IteratorAggregate;
 use Loom\Components\Component;
+use Traversable;
 
-abstract class Fields extends Component
+/**
+ * @implements IteratorAggregate<string, FormField>
+ */
+abstract class Fields extends Component implements Countable, IteratorAggregate
 {
     /**
      * @param  array<string, FormField>  $schema
@@ -67,5 +74,15 @@ abstract class Fields extends Component
     public function flex(): Flex
     {
         return Flex::make($this->schema);
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->schema);
+    }
+
+    public function count(): int
+    {
+        return count($this->schema);
     }
 }
