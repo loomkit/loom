@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Loom\Components\Fields;
 
+use ArrayAccess;
 use ArrayIterator;
 use Closure;
 use Countable;
@@ -21,8 +22,9 @@ use Traversable;
 
 /**
  * @implements IteratorAggregate<string, FormField>
+ * @implements ArrayAccess<string, FormField>
  */
-abstract class Fields extends Component implements Countable, IteratorAggregate
+abstract class Fields extends Component implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * @param  array<string, FormField>  $schema
@@ -51,6 +53,32 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
     public function remove(string $name): static
     {
         unset($this->schema[$name]);
+
+        return $this;
+    }
+
+    /**
+     * @template T of FormField
+     *
+     * @param  Closure(T $field, string $name): T  $mapper
+     */
+    public function map(Closure $mapper): static
+    {
+        foreach ($this as $name => $field) {
+            $this[$name] = $mapper($field, $name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @template T of array<string, FormField>
+     *
+     * @param  Closure(T $fields): T  $pipe
+     */
+    public function pipe(Closure $pipe): static
+    {
+        $this->schema = $pipe($this->schema);
 
         return $this;
     }
@@ -117,11 +145,6 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
         return $this->has($name);
     }
 
-    public function __unset(string $name): void
-    {
-        $this->remove($name);
-    }
-
     /**
      * @param  array{}|array{0: FormField}  $fields
      */
@@ -144,5 +167,30 @@ abstract class Fields extends Component implements Countable, IteratorAggregate
             'flex' => $this->section(),
             default => $this->group()
         };
+    }
+
+    public function offsetExists(string $name): bool
+    {
+        return $this->has($name);
+    }
+
+    public function offsetGet(string $name): ?FormField
+    {
+        return $this->get($name);
+    }
+
+    public function offsetSet(string $name, FormField $field): void
+    {
+        $this->set($name, $field);
+    }
+
+    public function offsetUnset(string $name): void
+    {
+        $this->remove($name);
+    }
+
+    public function __unset(string $name): void
+    {
+        $this->remove($name);
     }
 }
