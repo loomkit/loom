@@ -38,7 +38,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         with:
-          template_directory: "templates/${{ matrix.template }}"
+          package_directory: "templates/${{ matrix.template }}"
           repository_organization: "loomkit"
           repository_name: "${{ matrix.template }}"
           user_name: "${{ env.AUTHOR_NAME }}"
@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         with:
-          template_directory: "templates/${{ matrix.template }}"
+          package_directory: "templates/${{ matrix.template }}"
           repository_organization: "loomkit"
           repository_name: "${{ matrix.template }}"
           user_name: "${{ env.AUTHOR_NAME }}"
@@ -65,7 +65,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         with:
           tag: ${GITHUB_REF#refs/tags/}
-          template_directory: "templates/${{ matrix.template }}"
+          package_directory: "templates/${{ matrix.template }}"
           repository_organization: "loomkit"
           repository_name: "${{ matrix.template }}"
           user_name: "${{ env.AUTHOR_NAME }}"
