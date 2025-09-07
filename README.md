@@ -71,11 +71,11 @@ see the [LICENSE][license-link] file for details.
 [php-icon]: https://img.shields.io/badge/PHP-8.3-ccc.svg?style=flat&logo=php
 [php-link]: https://github.com/loomkit/loom/search?l=php "PHP code"
 
-[packagist-version-icon]: https://img.shields.io/packagist/v/loomkit/loom
-[packagist-version-link]: https://packagist.org/packages/loomkit/loom "Loom Releases"
+[packagist-version-icon]: https://img.shields.io/packagist/v/loomkit/core
+[packagist-version-link]: https://packagist.org/packages/loomkit/core "Loom Releases"
 
-[packagist-download-icon]: https://img.shields.io/packagist/dt/loomkit/loom
-[packagist-download-link]: https://packagist.org/packages/loomkit/loom "Loom Downloads"
+[packagist-download-icon]: https://img.shields.io/packagist/dt/loomkit/core
+[packagist-download-link]: https://packagist.org/packages/loomkit/core "Loom Downloads"
 
 [actions-icon]: https://github.com/loomkit/loom/workflows/CI/badge.svg
 [actions-link]: https://github.com/loomkit/loom/actions "Loom status"

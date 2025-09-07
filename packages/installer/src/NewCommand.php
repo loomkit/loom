@@ -255,8 +255,7 @@ class NewCommand extends BaseCommand
      */
     public function usingLoomVersionOrNewer(int $usingVersion, string $directory): bool
     {
-        $require = json_decode(file_get_contents($directory.'/composer.json'), true)['require'];
-        $version = $require['loomkit/core'] ?? $require['loomkit/loom'] ?? LoomManager::VERSION;
+        $version = json_decode(file_get_contents($directory.'/composer.json'), true)['require']['loomkit/core'] ?? LoomManager::VERSION;
         $version = str_replace('^', '', $version);
         $version = explode('.', $version)[0];
 

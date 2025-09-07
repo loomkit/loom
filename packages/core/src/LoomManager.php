@@ -93,10 +93,6 @@ TXT;
                 if ($package['name'] === 'loomkit/core') {
                     return $package['version'];
                 }
-
-                if ($package['name'] === 'loomkit/loom') {
-                    return $package['version'];
-                }
             }
 
             return self::VERSION;
