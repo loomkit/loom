@@ -10,7 +10,7 @@ class SlugField extends Field
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= 'slug';
+        $name ??= config('loom.components.slug.name', 'slug');
 
         return TextInput::make($name)
             ->required()

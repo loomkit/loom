@@ -10,10 +10,10 @@ class ImageColumn extends Column
 {
     public static function make(?string $name = null): FilamentImageColumn
     {
-        $name ??= 'image_path';
+        $name ??= config('loom.components.image.name', 'image_path');
 
         return FilamentImageColumn::make($name)
-            ->disk('public')
+            ->disk(config('loom.components.image.disk', config('loom.components.file.disk', 'public')))
             ->label(__('loom::components.image'));
     }
 }

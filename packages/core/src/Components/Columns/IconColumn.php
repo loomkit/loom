@@ -10,7 +10,7 @@ class IconColumn extends Column
 {
     public static function make(?string $name = null): FilamentIconColumn
     {
-        $name ??= 'icon';
+        $name ??= config('loom.components.icon.name', 'icon');
 
         return FilamentIconColumn::make($name)
             ->icon(fn (string $state): string => str_starts_with($state, 'o-')

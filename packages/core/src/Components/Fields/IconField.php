@@ -12,7 +12,7 @@ class IconField extends Field
 {
     public static function make(?string $name = null): Select
     {
-        $name ??= 'icon';
+        $name ??= config('loom.components.icon.name', 'icon');
 
         return Select::make($name)
             ->options(array_column(Heroicon::cases(), 'value', 'value'))

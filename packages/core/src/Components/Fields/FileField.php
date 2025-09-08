@@ -10,7 +10,7 @@ class FileField extends Field
 {
     public static function make(?string $name = null): FileUpload
     {
-        $name ??= 'path';
+        $name ??= config('loom.components.file.name', 'path');
 
         return FileUpload::make($name)
             ->disk(config('loom.components.file.disk'))

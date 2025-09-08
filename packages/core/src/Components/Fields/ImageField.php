@@ -10,10 +10,11 @@ class ImageField extends FileField
 {
     public static function make(?string $name = null): FileUpload
     {
-        $name ??= 'image_path';
+        $name ??= config('loom.components.image.name', 'image_path');
 
         return parent::make($name)
             ->image()
+            ->disk(config('loom.components.image.disk', config('loom.components.file.disk', 'public')))
             ->directory(config('loom.components.image.directory'))
             ->imageEditor()
             ->imageResizeMode(config('loom.components.image.resize_mode'))

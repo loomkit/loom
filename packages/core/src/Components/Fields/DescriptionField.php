@@ -10,7 +10,7 @@ class DescriptionField extends Field
 {
     public static function make(?string $name = null): Textarea
     {
-        $name ??= 'description';
+        $name ??= config('loom.components.description.name', 'description');
 
         return Textarea::make($name)
             ->autosize()

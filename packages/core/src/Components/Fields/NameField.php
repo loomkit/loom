@@ -10,7 +10,7 @@ class NameField extends Field
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= 'name';
+        $name ??= config('loom.components.name.name', 'name');
 
         return TextInput::make($name)
             ->required()

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Loom\Fields;
+namespace Loom\Components\Fields;
 
 use Closure;
 use Filament\Forms\Components\Select;
@@ -15,7 +15,12 @@ class BelongsToOrganizationField extends BelongsToNamedField
         ?Closure $modifyQueryUsing = null,
         bool $ignoreRecord = false
     ): Select {
-        return parent::make($name ?? 'organization', $titleAttribute, $modifyQueryUsing, $ignoreRecord)
-            ->label(__('Organisation'));
+        return parent::make(
+            $name ?? config('loom.components.organization.name', 'organization'),
+            $titleAttribute,
+            $modifyQueryUsing,
+            $ignoreRecord
+        )
+            ->label(__('loom::components.organization'));
     }
 }

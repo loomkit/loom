@@ -10,7 +10,7 @@ class DescriptionColumn extends Column
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= 'description';
+        $name ??= config('loom.components.description.name', 'description');
 
         return TextColumn::make($name)
             ->sortable()

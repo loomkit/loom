@@ -10,12 +10,12 @@ class AvatarField extends ImageField
 {
     public static function make(?string $name = null): FileUpload
     {
-        $name ??= 'avatar_path';
+        $name ??= config('loom.components.avatar.name', 'avatar_path');
 
         return parent::make($name)
             ->avatar()
             ->alignCenter()
-            ->directory('images/avatars')
+            ->directory(config('loom.components.avatar.directory', 'images/avatars'))
             ->label(__('loom.components.avatar'));
     }
 }
