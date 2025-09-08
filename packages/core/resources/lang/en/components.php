@@ -6,6 +6,7 @@ return [
     'last_name' => 'Last Name',
     'slug' => 'Slug',
     'username' => 'Username',
+    'password' => 'Password',
     'description' => 'Description',
     'detailed_description' => 'Description',
     'tags' => 'Tags',
