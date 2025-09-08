@@ -7,6 +7,7 @@ return [
     'slug' => 'Slug',
     'username' => 'Username',
     'password' => 'Password',
+    'password_confirmation' => 'Confirm password',
     'description' => 'Description',
     'detailed_description' => 'Description',
     'tags' => 'Tags',
