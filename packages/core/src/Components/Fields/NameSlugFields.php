@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Loom\Components\Fields;
 
 use Illuminate\Support\Str;
+use Loom\Components\Fields;
 
 /**
  * @extends Fields<string, \Filament\Forms\Components\TextInput>

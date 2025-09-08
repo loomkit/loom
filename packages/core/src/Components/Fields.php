@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Loom\Components\Fields;
+namespace Loom\Components;
 
 use ArrayAccess;
 use ArrayIterator;
@@ -17,7 +17,6 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Illuminate\Contracts\Support\Htmlable;
 use IteratorAggregate;
-use Loom\Components\Component;
 use Traversable;
 
 /**
