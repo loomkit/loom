@@ -21,7 +21,7 @@ class LoomServiceProvider extends LoomPackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->startWith(function (InstallCommand $command) {
-                        $command->info(Loom::getLogo());
+                        $command->info(Loom::logo());
                     })
                     ->copyAndRegisterServiceProviderInApp()
                     ->askToStarRepoOnGitHub('loomkit/loom');

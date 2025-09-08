@@ -146,6 +146,6 @@ abstract class MakeCommand extends GeneratorCommand
 
     public function loomNamespace(): string
     {
-        return Loom::getNamespace();
+        return Loom::namespace();
     }
 }

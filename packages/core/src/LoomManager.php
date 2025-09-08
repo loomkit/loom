@@ -36,7 +36,7 @@ TXT;
 
     protected ?string $version = null;
 
-    public function getVersion(): string
+    public function version(): string
     {
         if (! isset($this->version)) {
             $this->version = $this->resolveVersion();
@@ -45,27 +45,27 @@ TXT;
         return $this->version;
     }
 
-    public function getNamespace(): string
+    public function namespace(): string
     {
         return __NAMESPACE__.'\\';
     }
 
-    public function getName(): string
+    public function name(): string
     {
         return self::NAME;
     }
 
-    public function getIcon(): string
+    public function icon(): string
     {
         return self::ICON;
     }
 
-    public function getNiceName(): string
+    public function niceName(): string
     {
-        return $this->getName().' '.$this->getIcon();
+        return $this->name().' '.$this->icon();
     }
 
-    public function getLogo(string $color = 'blue', bool $filled = true): string
+    public function logo(string $color = 'blue', bool $filled = true): string
     {
         return PHP_EOL."<fg=$color>".($filled ? self::FILLED_LOGO : self::LOGO).'</>'.PHP_EOL;
     }

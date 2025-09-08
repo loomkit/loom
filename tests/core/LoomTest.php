@@ -3,11 +3,11 @@
 use Loom\Loom;
 
 it('can get the version from the manager', function () {
-    expect(Loom::getVersion())->not->toBeEmpty();
-    expect(Loom::getVersion())->toBeString();
+    expect(Loom::version())->not->toBeEmpty();
+    expect(Loom::version())->toBeString();
 });
 
 it('can get the logo', function () {
-    expect(Loom::getLogo())->not->toBeEmpty();
-    expect(Loom::getLogo())->toBeString();
+    expect(Loom::logo())->not->toBeEmpty();
+    expect(Loom::logo())->toBeString();
 });

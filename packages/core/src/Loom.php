@@ -7,12 +7,12 @@ namespace Loom;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static string getVersion()
- * @method static string getNamespace()
- * @method static string getName()
- * @method static string getIcon()
- * @method static string getNiceName()
- * @method static string getLogo(string $color = 'blue', bool $filled = true)
+ * @method static string version()
+ * @method static string namespace()
+ * @method static string name()
+ * @method static string icon()
+ * @method static string niceName()
+ * @method static string logo(string $color = 'blue', bool $filled = true)
  *
  * @see \Loom\LoomManager
  */
