@@ -7,7 +7,7 @@ namespace Loom\Components\Columns;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
 
-class RelatedToColumn extends NameColumn
+class RelationshipColumn extends NameColumn
 {
     public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {

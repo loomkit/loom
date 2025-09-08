@@ -6,7 +6,7 @@ namespace Loom\Components\Columns;
 
 use Filament\Tables\Columns\TextColumn;
 
-class OrganizationColumn extends RelatedToColumn
+class OrganizationColumn extends RelationshipColumn
 {
     public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {

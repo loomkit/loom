@@ -7,7 +7,7 @@ namespace Loom\Components\Fields;
 use Closure;
 use Filament\Forms\Components\Select;
 
-class OrganizationField extends RelatedToField
+class OrganizationField extends RelationshipField
 {
     public static function make(
         ?string $name = null,

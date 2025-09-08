@@ -8,7 +8,7 @@ use Closure;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Str;
 
-class RelatedToField extends Field
+class RelationshipField extends Field
 {
     public static function make(
         ?string $name = null,
@@ -28,7 +28,7 @@ class RelatedToField extends Field
         if (__($label) === $label) {
             $label = Str::title($related);
         }
-        $titleAttribute ??= config()->string("loom.components.{$related}.title_attribute");
+        $titleAttribute ??= config()->string("loom.components.{$related}.title_attribute", 'name');
         $related = Str::camel($related);
 
         return Select::make(Str::snake($name))
