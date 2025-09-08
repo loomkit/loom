@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Loom;
 
+use Illuminate\Support\Str;
 use Throwable;
 
 /**
@@ -47,6 +48,11 @@ TXT;
     protected string $color = self::COLOR;
 
     protected string $logo = self::FILLED_LOGO;
+
+    /**
+     * @var array<string, string> $assets
+     */
+    protected array $assets = [];
 
     public function version(): string
     {
@@ -98,6 +104,11 @@ TXT;
         return $this->name().' '.$this->icon();
     }
 
+    public function nameSlug(): string
+    {
+        return Str::slug($this->name());
+    }
+
     public function useSimpleLogo(): string
     {
         return $this->logo(self::SIMPLE_LOGO);
@@ -117,6 +128,89 @@ TXT;
         return app()->runningInConsole()
             ? PHP_EOL."<fg={$this->color()}>".$this->logo.'</>'.PHP_EOL
             : $this->logo;
+    }
+
+    public function basePath(string $path = ''): string
+    {
+        return dirname(__DIR__).DIRECTORY_SEPARATOR.$this->normalizePath($path);
+    }
+
+    public function resourcePath(string $path = ''): string
+    {
+        return $this->basePath("resources/{$this->normalizePath($path)}");
+    }
+
+    public function distPath(string $path = ''): string
+    {
+        return $this->resourcePath("dist/{$this->normalizePath($path)}");
+    }
+
+    public function asset(string $path): string
+    {
+        $path = $this->normalizePath($path);
+
+        if (! isset($this->assets[$path])) {
+            $this->assets[$path] = file_exists(public_path($this->vendorPath($path)))
+            ? asset(str_replace('\\', '/', $this->vendorPath($path)))
+            : $this->base64file($this->distPath($path));
+        }
+
+        return $this->assets[$path];
+    }
+
+    protected function vendorPath(string $path = ''): string
+    {
+        return "vendor/{$this->nameSlug()}/{$this->normalizePath($path)}";
+    }
+
+    protected function normalizePath(string $path): string
+    {
+        return trim(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path), DIRECTORY_SEPARATOR);
+    }
+
+    protected function base64file(string $path): string
+    {
+        if (is_file($path) && ($data = file_get_contents($path))) {
+            return $this->base64data($data, Str::afterLast($path, '.'));
+        }
+
+        return '';
+    }
+
+    protected function base64data(string $data, string $ext): string
+    {
+        return "data:{$this->mimeType($ext)};base64,".base64_encode($data);
+    }
+
+    protected function mimeType(string $ext): string
+    {
+        return match ($ext) {
+            // Fonts
+            'woff2' => 'font/woff2',
+            'woff' => 'font/woff',
+            'ttf' => 'font/ttf',
+            'otf' => 'font/otf',
+            'eot' => 'application/vnd.ms-fontobject',
+            // Images
+            'jpg', 'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            'avif' => 'image/avif',
+            'svg' => 'image/svg+xml',
+            'ico' => 'image/x-icon',
+            // Audios
+            'mp3' => 'audio/mpeg',
+            'ogg' => 'audio/ogg',
+            'wav' => 'audio/wav',
+            // Videos
+            'mp4' => 'video/mp4',
+            'webm' => 'video/webm',
+            'ogv' => 'video/ogg',
+            // Documents
+            'pdf' => 'application/pdf',
+            default => '',
+        };
     }
 
     private function resolveVersion(): string

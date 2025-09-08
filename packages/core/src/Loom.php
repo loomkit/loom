@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static string logo(?string $newLogo = null)
  * @method static string useSimpleLogo()
  * @method static string useFilledLogo()
+ * @method static string basePath(string $path = '')
+ * @method static string resourcePath(string $path = '')
+ * @method static string distPath(string $path = '')
+ * @method static string asset(string $path)
  *
  * @see \Loom\LoomManager
  */
