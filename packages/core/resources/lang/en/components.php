@@ -20,4 +20,5 @@ return [
     'logo' => 'Logo',
     'cover' => 'Cover',
     'organization' => 'Organization',
+    'parent' => 'Parent',
 ];
