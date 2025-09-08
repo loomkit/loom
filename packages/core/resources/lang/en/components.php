@@ -8,8 +8,10 @@ return [
     'icon' => 'Icon',
     'visible' => 'Visible',
     'available' => 'Available',
-    'avatar' => 'Avatar',
-    'image' => 'Image',
     'file' => 'File',
+    'image' => 'Image',
+    'avatar' => 'Avatar',
+    'photo' => 'Photo',
+    'logo' => 'Logo',
     'organization' => 'Organization',
 ];
