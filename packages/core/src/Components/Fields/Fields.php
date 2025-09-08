@@ -8,7 +8,7 @@ use ArrayAccess;
 use ArrayIterator;
 use Closure;
 use Countable;
-use Filament\Forms\Components\Field as FormField;
+use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Component as SchemaComponent;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Flex;
@@ -22,21 +22,29 @@ use Traversable;
 
 /**
  * @template TKey of string
- * @template TValue of FormField
+ * @template TValue of Field
  *
  * @implements IteratorAggregate<TKey, TValue>
  * @implements ArrayAccess<TKey, TValue>
  */
-abstract class Fields extends Component implements ArrayAccess, Countable, IteratorAggregate
+class Fields extends Component implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
-     * @param  array<string, FormField>  $schema
+     * @param  array<Tkey, TValue>  $schema
      */
     public function __construct(protected array $schema = []) {}
 
-    abstract public static function make(): self;
+    /**
+     * @template T of array<TKey, TValue>
+     *
+     * @param  T|null  $schema
+     */
+    public static function make(?array $schema = null): self
+    {
+        return new self($schema ?? []);
+    }
 
-    public function set(string $name, FormField $field): static
+    public function set(string $name, Field $field): static
     {
         $this->schema[$name] = $field;
 
@@ -48,7 +56,7 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
         return isset($this->schema[$name]);
     }
 
-    public function get(string $name): ?FormField
+    public function get(string $name): ?Field
     {
         return $this->schema[$name] ?? null;
     }
@@ -131,12 +139,12 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
         return count($this->schema);
     }
 
-    public function __get(string $name): ?FormField
+    public function __get(string $name): ?Field
     {
         return $this->get($name);
     }
 
-    public function __set(string $name, FormField $field): void
+    public function __set(string $name, Field $field): void
     {
         $this->set($name, $field);
     }
@@ -152,9 +160,9 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
     }
 
     /**
-     * @param  array{}|array{0: FormField}  $fields
+     * @param  array{}|array{0: Field}  $fields
      */
-    public function __call(string $name, array $fields): ?FormField
+    public function __call(string $name, array $fields): ?Field
     {
         if (isset($fields[0])) {
             $this->set($name, $fields[0]);
@@ -186,7 +194,7 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
     /**
      * @param  TKey  $offset
      */
-    public function offsetGet(mixed $offset): ?FormField
+    public function offsetGet(mixed $offset): ?Field
     {
         return $this->get($offset);
     }
