@@ -171,14 +171,16 @@ class Fields extends Component implements ArrayAccess, Countable, IteratorAggreg
         return $this->get($name);
     }
 
-    public function __invoke(string $layout = 'group'): SchemaComponent
+    public function __invoke(?string $layout = null): SchemaComponent
     {
+        $layout ??= config()->string('loom.components.fields.layout', 'group');
+
         return match (strtolower($layout)) {
             'group' => $this->group(),
             'fieldset' => $this->fieldset(),
             'grid' => $this->grid(),
             'flex' => $this->flex(),
-            'flex' => $this->section(),
+            'section' => $this->section(),
             default => $this->group()
         };
     }
