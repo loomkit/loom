@@ -6,6 +6,7 @@ namespace Loom\Components\Fields;
 
 use Closure;
 use Filament\Forms\Components\Select;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
 class RelatedToField extends Field
@@ -16,7 +17,7 @@ class RelatedToField extends Field
         ?Closure $modifyQueryUsing = null,
         bool $ignoreRecord = false
     ): Select {
-        $name ??= config('loom.components.related_to.name', 'related_to');
+        $name ??= Config::string('loom.components.related_to.name', 'related_to');
         $related = Str::snake($name);
         if (Str::endsWith($related, '_id')) {
             $related = Str::singular(Str::beforeLast($related, '_id'));
@@ -24,17 +25,20 @@ class RelatedToField extends Field
         if (Str::endsWith($related, '_ids')) {
             $related = Str::plural(Str::beforeLast($related, '_ids'));
         }
-        $label = $related;
-        $loomLabel = "loom::components.{$label}";
-        if (__($loomLabel) !== $loomLabel) {
-            $label = "loom::components.{$label}";
-        } else {
-            $label = Str::title($label);
+        $label = "loom::components.{$related}";
+        if (__($label) === $label) {
+            $label = Str::title($related);
         }
+        $titleAttribute ??= Config::string("loom.components.{$related}.title_attribute");
         $related = Str::camel($related);
 
         return Select::make(Str::snake($name))
-            ->relationship($related, $titleAttribute, $modifyQueryUsing, $ignoreRecord)
+            ->relationship(
+                $related,
+                $titleAttribute,
+                $modifyQueryUsing,
+                $ignoreRecord
+            )
             ->multiple($related === Str::plural($related))
             ->label(__($label));
     }
