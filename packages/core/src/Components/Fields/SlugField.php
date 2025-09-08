@@ -16,8 +16,8 @@ class SlugField extends Field
             ->required()
             ->unique(ignoreRecord: true)
             ->alphaDash()
-            ->minLength(1)
-            ->maxLength(255)
+            ->minLength(config('loom.components.slug.min_length', 1))
+            ->maxLength(config('loom.components.slug.max_length', 255))
             ->label(__('loom::components.slug'));
     }
 }
