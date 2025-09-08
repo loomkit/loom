@@ -19,7 +19,7 @@ final class LoomManager
 
     public const string COLOR = 'blue';
 
-    public const string LOGO = <<<TXT
+    public const string SIMPLE_LOGO = <<<TXT
   _
  | |    ___   ___  _ __ ___
  | |   / _ \ / _ \| '_ ` _ \
@@ -45,6 +45,8 @@ TXT;
     protected string $icon = self::ICON;
 
     protected string $color = self::COLOR;
+
+    protected string $logo = self::FILLED_LOGO;
 
     public function version(): string
     {
@@ -96,9 +98,25 @@ TXT;
         return $this->name().' '.$this->icon();
     }
 
-    public function logo(bool $filled = true): string
+    public function useSimpleLogo(): string
     {
-        return PHP_EOL."<fg={$this->color()}>".($filled ? self::FILLED_LOGO : self::LOGO).'</>'.PHP_EOL;
+        return $this->logo(self::SIMPLE_LOGO);
+    }
+
+    public function useFilledLogo(): string
+    {
+        return $this->logo(self::FILLED_LOGO);
+    }
+
+    public function logo(?string $newLogo = null): string
+    {
+        if (isset($newLogo)) {
+            $this->logo = $newLogo;
+        }
+
+        return app()->runningInConsole()
+            ? PHP_EOL."<fg={$this->color()}>".$this->logo.'</>'.PHP_EOL
+            : $this->logo;
     }
 
     private function resolveVersion(): string
