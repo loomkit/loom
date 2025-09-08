@@ -11,4 +11,5 @@ return [
     'avatar' => 'Avatar',
     'image' => 'Image',
     'file' => 'File',
+    'organization' => 'Organization',
 ];
