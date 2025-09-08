@@ -10,7 +10,7 @@ class UsernameColumn extends SlugColumn
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config('loom.components.username.name', 'username');
+        $name ??= config()->string('loom.components.username.name', 'username');
 
         return parent::make($name)
             ->label(__('loom::components.username'));

@@ -10,7 +10,7 @@ class CoverColumn extends ImageColumn
 {
     public static function make(?string $name = null): FilamentImageColumn
     {
-        $name ??= config('loom.components.cover.name', 'cover_path');
+        $name ??= config()->string('loom.components.cover.name', 'cover_path');
 
         return parent::make($name)
             ->label(__('loom.components.cover'));

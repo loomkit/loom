@@ -10,7 +10,7 @@ class DetailedDescriptionColumn extends DescriptionColumn
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config('loom.components.detailed_description.name', 'description');
+        $name ??= config()->string('loom.components.detailed_description.name', 'description');
 
         return parent::make($name)
             ->label(__('loom::components.detailed_description'));

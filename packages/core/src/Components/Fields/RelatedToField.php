@@ -6,7 +6,6 @@ namespace Loom\Components\Fields;
 
 use Closure;
 use Filament\Forms\Components\Select;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
 class RelatedToField extends Field
@@ -17,7 +16,7 @@ class RelatedToField extends Field
         ?Closure $modifyQueryUsing = null,
         bool $ignoreRecord = false
     ): Select {
-        $name ??= Config::string('loom.components.related_to.name', 'related_to');
+        $name ??= config()->string('loom.components.related_to.name', 'related_to');
         $related = Str::snake($name);
         if (Str::endsWith($related, '_id')) {
             $related = Str::singular(Str::beforeLast($related, '_id'));
@@ -29,7 +28,7 @@ class RelatedToField extends Field
         if (__($label) === $label) {
             $label = Str::title($related);
         }
-        $titleAttribute ??= Config::string("loom.components.{$related}.title_attribute");
+        $titleAttribute ??= config()->string("loom.components.{$related}.title_attribute");
         $related = Str::camel($related);
 
         return Select::make(Str::snake($name))

@@ -10,7 +10,7 @@ class AvatarColumn extends ImageColumn
 {
     public static function make(?string $name = null): FilamentImageColumn
     {
-        $name ??= config('loom.components.avatar.name', 'avatar_path');
+        $name ??= config()->string('loom.components.avatar.name', 'avatar_path');
 
         return parent::make($name)
             ->circular()

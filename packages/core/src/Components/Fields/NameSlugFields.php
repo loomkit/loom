@@ -17,8 +17,8 @@ class NameSlugFields extends Fields
 {
     public static function make(?string $name = null, ?string $slug = null): self
     {
-        $name ??= config('loom.components.name.name', 'name');
-        $name ??= config('loom.components.slug.name', 'slug');
+        $name ??= config()->string('loom.components.name.name', 'name');
+        $slug ??= config()->string('loom.components.slug.name', 'slug');
 
         $self = new self([
             $name => NameField::make($name)

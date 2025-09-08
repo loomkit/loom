@@ -10,11 +10,11 @@ class FileField extends Field
 {
     public static function make(?string $name = null): FileUpload
     {
-        $name ??= config('loom.components.file.name', 'path');
+        $name ??= config()->string('loom.components.file.name', 'path');
 
         return FileUpload::make($name)
-            ->disk(config('loom.components.file.disk'))
-            ->maxSize(config('loom.components.file.max_size'))
+            ->disk(config()->string('loom.components.file.disk', 'public'))
+            ->maxSize(config()->integer('loom.components.file.max_size', 2048))
             ->label(__('loom::components.file'));
     }
 }

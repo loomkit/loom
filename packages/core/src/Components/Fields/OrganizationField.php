@@ -16,8 +16,8 @@ class OrganizationField extends RelatedToField
         bool $ignoreRecord = false
     ): Select {
         return parent::make(
-            $name ?? config('loom.components.organization.name', 'organization_id'),
-            $titleAttribute ?? config('loom.components.organization.title_attribute', 'name'),
+            $name ?? config()->string('loom.components.organization.name', 'organization_id'),
+            $titleAttribute ?? config()->string('loom.components.organization.title_attribute', 'name'),
             $modifyQueryUsing,
             $ignoreRecord
         )

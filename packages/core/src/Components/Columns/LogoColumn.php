@@ -10,7 +10,7 @@ class LogoColumn extends AvatarColumn
 {
     public static function make(?string $name = null): ImageColumn
     {
-        $name ??= config('loom.components.logo.name', 'logo_path');
+        $name ??= config()->string('loom.components.logo.name', 'logo_path');
 
         return parent::make($name)
             ->label(__('loom.components.logo'));

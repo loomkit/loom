@@ -10,12 +10,12 @@ class NameField extends Field
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= config('loom.components.name.name', 'name');
+        $name ??= config()->string('loom.components.name.name', 'name');
 
         return TextInput::make($name)
             ->required()
-            ->minLength(2)
-            ->maxLength(255)
+            ->minLength(config()->integer('loom.components.name.min_length', 2))
+            ->maxLength(config()->integer('loom.components.name.max_length', 255))
             ->label(__('loom::components.name'));
     }
 }
