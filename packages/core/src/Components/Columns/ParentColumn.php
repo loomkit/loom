@@ -6,19 +6,14 @@ namespace Loom\Components\Columns;
 
 use Filament\Tables\Columns\TextColumn;
 
-class ParentColumn extends NameColumn
+class ParentColumn extends RelatedToColumn
 {
-    public static function make(?string $name = null): TextColumn
+    public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {
-        $name ??= config()->string(
-            'loom.components.parent.name',
-            'organization'
-        ).'.'.config()->string(
-            'loom.components.parent.title_attribute',
-            'name'
-        );
-
-        return parent::make($name)
+        return parent::make(
+            $name ?? config()->string('loom.components.parent.name', 'parent_id'),
+            $titleAttribute
+        )
             ->label(__('loom::components.parent'));
     }
 }
