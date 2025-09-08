@@ -6,16 +6,13 @@ namespace Loom\Components\Fields;
 
 use Filament\Forms\Components\TagsInput;
 
-class KeywordsField extends Field
+class KeywordsField extends TagsField
 {
     public static function make(?string $name = null): TagsInput
     {
         $name ??= config()->string('loom.components.keywords.name', 'keywords');
 
-        return TagsInput::make($name)
-            ->separator(config()->string('loom.components.keywords.separator', ','))
-            ->splitKeys(config()->array('loom.components.keywords.split_keys', ['Tab', 'Entrer', ',', ';', '.']))
-            ->columnSpanFull()
+        return parent::make($name)
             ->label(__('loom::components.keywords'));
     }
 }

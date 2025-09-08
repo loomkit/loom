@@ -8,6 +8,7 @@ return [
     'username' => 'Nom d\'utilisateur',
     'description' => 'Description',
     'detailed_description' => 'Description',
+    'tags' => 'Tags',
     'keywords' => 'Mots clés',
     'icon' => 'Icône',
     'visible' => 'Visible',
