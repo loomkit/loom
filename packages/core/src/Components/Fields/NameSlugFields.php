@@ -7,6 +7,8 @@ namespace Loom\Components\Fields;
 use Illuminate\Support\Str;
 
 /**
+ * @extends Fields<string, \Filament\Forms\Components\TextInput>
+ *
  * @property ?NameField $name
  * @property ?SlugField $slug
  *
