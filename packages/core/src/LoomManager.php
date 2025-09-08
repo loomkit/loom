@@ -36,6 +36,12 @@ TXT;
 
     protected ?string $version = null;
 
+    protected ?string $namespace = null;
+
+    protected string $name = self::NAME;
+
+    protected string $icon = self::ICON;
+
     public function version(): string
     {
         if (! isset($this->version)) {
@@ -47,17 +53,29 @@ TXT;
 
     public function namespace(): string
     {
-        return __NAMESPACE__.'\\';
+        if (! isset($this->namespace)) {
+            $this->namespace = __NAMESPACE__.'\\';
+        }
+
+        return $this->namespace;
     }
 
-    public function name(): string
+    public function name(?string $newName = null): string
     {
-        return self::NAME;
+        if (isset($newName)) {
+            $this->name = $newName;
+        }
+
+        return $this->name;
     }
 
-    public function icon(): string
+    public function icon(?string $newIcon = null): string
     {
-        return self::ICON;
+        if (isset($newIcon)) {
+            $this->icon = $newIcon;
+        }
+
+        return $this->icon;
     }
 
     public function niceName(): string
