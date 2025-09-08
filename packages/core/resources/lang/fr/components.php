@@ -5,6 +5,7 @@ return [
     'first_name' => 'Prénom',
     'last_name' => 'Nom de famille',
     'slug' => 'Slug',
+    'username' => 'Nom d\'utilisateur',
     'description' => 'Description',
     'detailed_description' => 'Description',
     'icon' => 'Icône',
