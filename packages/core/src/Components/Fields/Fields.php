@@ -146,6 +146,11 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
         return $this->has($name);
     }
 
+    public function __unset(string $name): void
+    {
+        $this->remove($name);
+    }
+
     /**
      * @param  array{}|array{0: FormField}  $fields
      */
@@ -201,10 +206,5 @@ abstract class Fields extends Component implements ArrayAccess, Countable, Itera
     public function offsetUnset(mixed $offset): void
     {
         $this->remove($offset);
-    }
-
-    public function __unset(string $name): void
-    {
-        $this->remove($name);
     }
 }
