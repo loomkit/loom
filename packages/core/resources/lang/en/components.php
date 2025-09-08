@@ -8,4 +8,7 @@ return [
     'icon' => 'Icon',
     'visible' => 'Visible',
     'available' => 'Available',
+    'avatar' => 'Avatar',
+    'image' => 'Image',
+    'file' => 'File',
 ];

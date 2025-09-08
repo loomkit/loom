@@ -16,4 +16,19 @@ return [
             'path' => env('ADMIN_PANEL_PATH', 'admin'),
         ],
     ],
+
+    'components' => [
+        'file' => [
+            'disk' => 'public',
+            'max_size' => 2048,
+        ],
+        'image' => [
+            'directory' => 'images',
+            'resize_mode' => 'cover',
+            'crop_aspect_ratio' => '1:1',
+        ],
+        'avatar' => [
+            'directory' => 'images/avatars',
+        ],
+    ],
 ];
