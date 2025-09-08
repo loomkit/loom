@@ -13,5 +13,6 @@ return [
     'avatar' => 'Avatar',
     'photo' => 'Photo',
     'logo' => 'Logo',
+    'cover' => 'Couverture',
     'organization' => 'Organisation',
 ];
