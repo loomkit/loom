@@ -17,6 +17,8 @@ final class LoomManager
 
     public const string ICON = '🧵';
 
+    public const string COLOR = 'blue';
+
     public const string LOGO = <<<TXT
   _
  | |    ___   ___  _ __ ___
@@ -41,6 +43,8 @@ TXT;
     protected string $name = self::NAME;
 
     protected string $icon = self::ICON;
+
+    protected string $color = self::COLOR;
 
     public function version(): string
     {
@@ -78,14 +82,23 @@ TXT;
         return $this->icon;
     }
 
+    public function color(?string $newColor = null): string
+    {
+        if (isset($newColor)) {
+            $this->color = $newColor;
+        }
+
+        return $this->color;
+    }
+
     public function niceName(): string
     {
         return $this->name().' '.$this->icon();
     }
 
-    public function logo(string $color = 'blue', bool $filled = true): string
+    public function logo(bool $filled = true): string
     {
-        return PHP_EOL."<fg=$color>".($filled ? self::FILLED_LOGO : self::LOGO).'</>'.PHP_EOL;
+        return PHP_EOL."<fg={$this->color()}>".($filled ? self::FILLED_LOGO : self::LOGO).'</>'.PHP_EOL;
     }
 
     private function resolveVersion(): string

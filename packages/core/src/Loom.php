@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string namespace()
  * @method static string name(?string $newName = null)
  * @method static string icon(?string $newIcon = null)
+ * @method static string color(?string $newColor = null)
  * @method static string niceName()
  * @method static string logo(string $color = 'blue', bool $filled = true)
  *
