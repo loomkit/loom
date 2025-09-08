@@ -50,7 +50,7 @@ TXT;
     protected string $logo = self::FILLED_LOGO;
 
     /**
-     * @var array<string, string> $assets
+     * @var array<string, string>
      */
     protected array $assets = [];
 
@@ -156,6 +156,16 @@ TXT;
         }
 
         return $this->assets[$path];
+    }
+
+    public function logoPath(): string
+    {
+        return $this->asset('logo.svg');
+    }
+
+    public function faviconPath(): string
+    {
+        return $this->asset('favicon.svg');
     }
 
     protected function vendorPath(string $path = ''): string

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string icon(?string $newIcon = null)
  * @method static string color(?string $newColor = null)
  * @method static string niceName()
+ * @method static string nameSlug()
  * @method static string logo(?string $newLogo = null)
  * @method static string useSimpleLogo()
  * @method static string useFilledLogo()
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string resourcePath(string $path = '')
  * @method static string distPath(string $path = '')
  * @method static string asset(string $path)
+ * @method static string logoPath()
+ * @method static string faviconPath()
  *
  * @see \Loom\LoomManager
  */
