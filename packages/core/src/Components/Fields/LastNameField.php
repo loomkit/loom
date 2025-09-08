@@ -13,6 +13,7 @@ class LastNameField extends NameField
         $name ??= config('loom.components.last_name.name', 'last_name');
 
         return parent::make($name)
+            ->optional(config('loom.components.last_name.optional', true))
             ->label(__('loom::components.last_name'));
     }
 }
