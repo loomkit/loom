@@ -16,7 +16,7 @@ class RelatedToField extends Field
         ?Closure $modifyQueryUsing = null,
         bool $ignoreRecord = false
     ): Select {
-        $name ??= config()->string('loom.components.related_to.name', 'related_to');
+        $name ??= Str::beforeLast(Str::afterLast(static::class, '\\'), 'Field');
         $related = Str::snake($name);
         if (Str::endsWith($related, '_id')) {
             $related = Str::singular(Str::beforeLast($related, '_id'));

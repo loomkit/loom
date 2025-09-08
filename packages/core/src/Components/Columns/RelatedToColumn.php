@@ -11,7 +11,7 @@ class RelatedToColumn extends NameColumn
 {
     public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {
-        $name ??= config()->string('loom.components.related_to.name', 'related_to');
+        $name ??= Str::beforeLast(Str::afterLast(static::class, '\\'), 'Column');
         $related = Str::snake($name);
         if (Str::endsWith($related, '_id')) {
             $related = Str::singular(Str::beforeLast($related, '_id'));
