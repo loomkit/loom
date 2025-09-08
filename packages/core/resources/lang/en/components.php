@@ -2,6 +2,8 @@
 
 return [
     'name' => 'Name',
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
     'slug' => 'Slug',
     'description' => 'Description',
     'detailed_description' => 'Description',
