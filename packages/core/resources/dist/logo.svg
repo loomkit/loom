@@ -24,7 +24,7 @@
     <rect x="584" y="438" width="144" height="70" fill="black"/>
   </mask>
 
-  <g fill="none" stroke="#3B82F6" stroke-width="140" stroke-linecap="round" mask="url(#mask-rects)">
+  <g fill="none" stroke="#3b82f6" stroke-width="140" stroke-linecap="round" mask="url(#mask-rects)">
     <line x1="160" y1="368" x2="864" y2="368"/>
     <line x1="160" y1="656" x2="864" y2="656"/>
     <line x1="368" y1="160" x2="368" y2="864"/>

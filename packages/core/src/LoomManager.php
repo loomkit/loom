@@ -18,7 +18,7 @@ final class LoomManager
 
     public const string ICON = '🧵';
 
-    public const string COLOR = 'blue';
+    public const string COLOR = '#3b82f6';
 
     public const string SIMPLE_LOGO = <<<TXT
   _
