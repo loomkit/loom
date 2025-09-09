@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string icon(?string $newIcon = null)
  * @method static string color(?string $newColor = null)
  * @method static string niceName()
- * @method static string nameSlug()
+ * @method static string slug()
  * @method static string logo(?string $newLogo = null)
  * @method static string useSimpleLogo()
  * @method static string useFilledLogo()

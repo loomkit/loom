@@ -104,7 +104,7 @@ TXT;
         return $this->name().' '.$this->icon();
     }
 
-    public function nameSlug(): string
+    public function slug(): string
     {
         return Str::slug($this->name());
     }
@@ -170,7 +170,7 @@ TXT;
 
     protected function vendorPath(string $path = ''): string
     {
-        return "vendor/{$this->nameSlug()}/{$this->normalizePath($path)}";
+        return "vendor/{$this->slug()}/{$this->normalizePath($path)}";
     }
 
     protected function normalizePath(string $path): string
