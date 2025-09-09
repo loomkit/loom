@@ -109,6 +109,14 @@ TXT;
         return Str::slug($this->name());
     }
 
+    public function plugin(): LoomPlugin
+    {
+        /** @var LoomPlugin */
+        $plugin = filament(app(LoomPlugin::class)->getId());
+
+        return $plugin;
+    }
+
     public function useSimpleLogo(): string
     {
         return $this->logo(self::SIMPLE_LOGO);

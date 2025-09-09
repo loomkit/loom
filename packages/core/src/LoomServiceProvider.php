@@ -70,6 +70,7 @@ class LoomServiceProvider extends LoomPackageServiceProvider
     protected function registerServices(): void
     {
         $this->app->singleton(LoomManager::class);
+        $this->app->scoped(LoomPlugin::class);
         $this->app->alias(LoomManager::class, 'loom');
     }
 

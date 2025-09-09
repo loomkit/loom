@@ -64,6 +64,7 @@ abstract class LoomPanelProvider extends FilamentPanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->plugin(LoomPlugin::make());
     }
 }

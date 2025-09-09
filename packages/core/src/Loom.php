@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string niceName()
  * @method static string slug()
  * @method static string logo(?string $newLogo = null)
+ * @method static LoomPlugin plugin()
  * @method static string useSimpleLogo()
  * @method static string useFilledLogo()
  * @method static string basePath(string $path = '')
