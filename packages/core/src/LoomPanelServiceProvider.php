@@ -21,7 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-abstract class LoomPanelProvider extends FilamentPanelProvider
+abstract class LoomPanelServiceProvider extends FilamentPanelProvider
 {
     abstract public function configure(Panel $panel): Panel;
 
