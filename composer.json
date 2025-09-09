@@ -41,7 +41,10 @@
         "psr-4": {
             "Loom\\": "packages/core/src/",
             "Loom\\Installer\\": "packages/installer/src/"
-        }
+        },
+        "files": [
+            "packages/core/src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
