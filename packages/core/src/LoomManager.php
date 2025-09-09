@@ -149,6 +149,14 @@ TXT;
         return config("loom.{$key}", $default);
     }
 
+    /**
+     * Translate the given message.
+     */
+    public function trans(string $key, array $replace = [], ?string $locale = null): string|array
+    {
+        return trans("loom::{$key}", $replace, $locale);
+    }
+
     public function basePath(string $path = ''): string
     {
         return dirname(__DIR__).DIRECTORY_SEPARATOR.$this->normalizePath($path);
