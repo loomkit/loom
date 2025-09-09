@@ -23,9 +23,11 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 abstract class LoomPanelProvider extends FilamentPanelProvider
 {
+    abstract public function configure(Panel $panel): Panel;
+
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $panel
             ->favicon(Loom::faviconPath())
             ->brandName(Loom::name())
             ->brandLogo(Loom::logoPath())
@@ -66,5 +68,7 @@ abstract class LoomPanelProvider extends FilamentPanelProvider
                 Authenticate::class,
             ])
             ->plugin(LoomPlugin::make());
+
+        return $this->configure($panel);
     }
 }
