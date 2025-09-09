@@ -109,14 +109,6 @@ TXT;
         return Str::slug($this->name());
     }
 
-    public function plugin(): LoomPlugin
-    {
-        /** @var LoomPlugin */
-        $plugin = filament(app(LoomPlugin::class)->getId());
-
-        return $plugin;
-    }
-
     public function useSimpleLogo(): string
     {
         return $this->logo(self::SIMPLE_LOGO);
@@ -136,6 +128,25 @@ TXT;
         return app()->runningInConsole()
             ? PHP_EOL."<fg={$this->color()}>".$this->logo.'</>'.PHP_EOL
             : $this->logo;
+    }
+
+    public function plugin(): LoomPlugin
+    {
+        /** @var LoomPlugin */
+        $plugin = filament(app(LoomPlugin::class)->getId());
+
+        return $plugin;
+    }
+
+    /**
+     * @template TValue of mixed
+     *
+     * @param  TValue  $default
+     * @return ($default is null ? TValue|null : TValue)
+     */
+    public function config(string $key, mixed $default = null): mixed
+    {
+        return config("loom.{$key}", $default);
     }
 
     public function basePath(string $path = ''): string
