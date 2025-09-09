@@ -13,6 +13,6 @@ class PhotoColumn extends AvatarColumn
         $name ??= loom()->config('components.photo.name', 'photo_path');
 
         return parent::make($name)
-            ->label(__('loom.components.photo'));
+            ->label(loom()->trans('components.photo'));
     }
 }

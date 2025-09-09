@@ -13,6 +13,6 @@ class LogoColumn extends AvatarColumn
         $name ??= loom()->config('components.logo.name', 'logo_path');
 
         return parent::make($name)
-            ->label(__('loom.components.logo'));
+            ->label(loom()->trans('components.logo'));
     }
 }
