@@ -10,13 +10,13 @@ class GenderColumn extends Column
 {
     public static function make(?string $name = null): SelectColumn
     {
-        $name ??= config()->string('loom.components.gender.name', 'gender');
+        $name ??= loom()->config('components.gender.name', 'gender');
         /** @var array<string, string> */
-        $options = config()->array(
-            'loom.components.gender.options',
+        $options = loom()->config(
+            'components.gender.options',
             [
-                'male' => __('loom::components.male'),
-                'female' => __('loom::components.female'),
+                'male' => loom()->trans('components.male'),
+                'female' => loom()->trans('components.female'),
             ]
         );
 
@@ -24,6 +24,6 @@ class GenderColumn extends Column
             ->options($options)
             ->sortable()
             ->searchable()
-            ->label(__('loom::components.gender'));
+            ->label(loom()->trans('components.gender'));
     }
 }

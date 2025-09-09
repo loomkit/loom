@@ -10,12 +10,12 @@ class TagsField extends Field
 {
     public static function make(?string $name = null): TagsInput
     {
-        $name ??= config()->string('loom.components.tags.name', 'tags');
+        $name ??= loom()->config('components.tags.name', 'tags');
 
         return TagsInput::make($name)
-            ->separator(config()->string('loom.components.tags.separator', ','))
+            ->separator(loom()->config('components.tags.separator', ','))
             ->splitKeys(config()->array('loom.components.tags.split_keys', ['Tab', 'Entrer', ',', ';', '.']))
             ->columnSpanFull()
-            ->label(__('loom::components.tags'));
+            ->label(loom()->trans('components.tags'));
     }
 }

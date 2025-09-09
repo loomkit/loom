@@ -10,10 +10,10 @@ class AvailableColumn extends Column
 {
     public static function make(?string $name = null): IconColumn
     {
-        $name ??= config()->string('loom.components.available.name', 'available');
+        $name ??= loom()->config('components.available.name', 'available');
 
         return IconColumn::make($name)
             ->boolean()
-            ->label(__('loom::components.available'));
+            ->label(loom()->trans('components.available'));
     }
 }

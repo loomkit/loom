@@ -11,9 +11,9 @@ class OrganizationColumn extends RelationshipColumn
     public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {
         return parent::make(
-            $name ?? config()->string('loom.components.organization.name', 'organization_id'),
+            $name ?? loom()->config('components.organization.name', 'organization_id'),
             $titleAttribute
         )
-            ->label(__('loom::components.organization'));
+            ->label(loom()->trans('components.organization'));
     }
 }

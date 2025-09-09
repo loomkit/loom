@@ -47,7 +47,7 @@ abstract class LoomPanelProvider extends FilamentPanelProvider
             })
             ->databaseNotifications()
             ->navigationItems([
-                NavigationItem::make(fn () => __('loom::panels.navigation.home'))
+                NavigationItem::make(fn () => loom()->trans('panels.navigation.home'))
                     ->url(url('/'))
                     ->openUrlInNewTab()
                     ->sort(-5)

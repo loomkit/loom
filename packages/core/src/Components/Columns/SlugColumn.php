@@ -10,11 +10,11 @@ class SlugColumn extends Column
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config()->string('loom.components.slug.name', 'slug');
+        $name ??= loom()->config('components.slug.name', 'slug');
 
         return TextColumn::make($name)
             ->sortable()
             ->searchable()
-            ->label(__('loom::components.slug'));
+            ->label(loom()->trans('components.slug'));
     }
 }

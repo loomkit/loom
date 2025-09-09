@@ -10,7 +10,7 @@ class LogoField extends AvatarField
 {
     public static function make(?string $name = null): FileUpload
     {
-        $name ??= config()->string('loom.components.logo.name', 'logo_path');
+        $name ??= loom()->config('components.logo.name', 'logo_path');
 
         return parent::make($name)
             ->label(__('loom.components.logo'));

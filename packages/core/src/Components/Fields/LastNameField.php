@@ -10,10 +10,10 @@ class LastNameField extends NameField
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= config()->string('loom.components.last_name.name', 'last_name');
+        $name ??= loom()->config('components.last_name.name', 'last_name');
 
         return parent::make($name)
             ->nullable(config()->boolean('loom.components.last_name.optional', true))
-            ->label(__('loom::components.last_name'));
+            ->label(loom()->trans('components.last_name'));
     }
 }

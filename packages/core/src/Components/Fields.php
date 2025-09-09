@@ -172,7 +172,7 @@ class Fields extends Component implements ArrayAccess, Countable, IteratorAggreg
 
     public function __invoke(?string $layout = null): SchemaComponent
     {
-        $layout ??= config()->string('loom.components.fields.layout', 'group');
+        $layout ??= loom()->config('components.fields.layout', 'group');
 
         return match (strtolower($layout)) {
             'group' => $this->group(),

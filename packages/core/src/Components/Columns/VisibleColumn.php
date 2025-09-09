@@ -10,9 +10,9 @@ class VisibleColumn extends Column
 {
     public static function make(?string $name = null): ToggleColumn
     {
-        $name ??= config()->string('loom.components.visible.name', 'visible');
+        $name ??= loom()->config('components.visible.name', 'visible');
 
         return ToggleColumn::make($name)
-            ->label(__('loom::components.visible'));
+            ->label(loom()->trans('components.visible'));
     }
 }

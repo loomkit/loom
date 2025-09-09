@@ -10,11 +10,11 @@ class DetailedDescriptionField extends Field
 {
     public static function make(?string $name = null): RichEditor
     {
-        $name ??= config()->string('loom.components.detailed_description.name', 'description');
+        $name ??= loom()->config('components.detailed_description.name', 'description');
 
         return RichEditor::make($name)
             ->minLength(config()->integer('loom.components.detailed_description.min_length', 8))
             ->columnSpanFull()
-            ->label(__('loom::components.detailed_description'));
+            ->label(loom()->trans('components.detailed_description'));
     }
 }

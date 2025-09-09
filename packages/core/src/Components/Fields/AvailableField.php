@@ -10,12 +10,12 @@ class AvailableField extends Field
 {
     public static function make(?string $name = null): Toggle
     {
-        $name ??= config()->string('loom.components.available.name', 'available');
+        $name ??= loom()->config('components.available.name', 'available');
 
         return Toggle::make($name)
             ->required()
             ->inline(false)
             ->default(true)
-            ->label(__('loom::components.available'));
+            ->label(loom()->trans('components.available'));
     }
 }

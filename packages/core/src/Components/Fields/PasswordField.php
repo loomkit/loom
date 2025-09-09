@@ -11,7 +11,7 @@ class PasswordField extends Field
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= config()->string('loom.components.password.name', 'password');
+        $name ??= loom()->config('components.password.name', 'password');
 
         return TextInput::make($name)
             ->password()
@@ -20,6 +20,6 @@ class PasswordField extends Field
             ->visible(fn (?Model $record) => $record === null || $record->exists)
             ->dehydrated(fn ($state) => ! empty($state))
             ->dehydrateStateUsing(fn ($state) => empty($state) ? null : bcrypt($state))
-            ->label(__('loom::components.password'));
+            ->label(loom()->trans('components.password'));
     }
 }

@@ -10,11 +10,11 @@ class TagsColumn extends Column
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config()->string('loom.components.tags.name', 'tags');
+        $name ??= loom()->config('components.tags.name', 'tags');
 
         return TextColumn::make($name)
             ->badge()
-            ->separator(config()->string('loom.components.tags.separator', ','))
+            ->separator(loom()->config('components.tags.separator', ','))
             ->sortable()
             ->searchable()
             ->listWithLineBreaks()
@@ -22,6 +22,6 @@ class TagsColumn extends Column
             ->words(config()->integer('loom.components.tags.words', 6))
             ->limit(config()->integer('loom.components.tags.limit', 96))
             ->lineClamp(config()->integer('loom.components.tags.line_clamp', 2))
-            ->label(__('loom::components.tags'));
+            ->label(loom()->trans('components.tags'));
     }
 }

@@ -11,9 +11,9 @@ class ParentColumn extends RelationshipColumn
     public static function make(?string $name = null, ?string $titleAttribute = null): TextColumn
     {
         return parent::make(
-            $name ?? config()->string('loom.components.parent.name', 'parent_id'),
+            $name ?? loom()->config('components.parent.name', 'parent_id'),
             $titleAttribute
         )
-            ->label(__('loom::components.parent'));
+            ->label(loom()->trans('components.parent'));
     }
 }

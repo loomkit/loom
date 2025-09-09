@@ -11,7 +11,7 @@ class PasswordConfirmationField extends Field
 {
     public static function make(?string $name = null): TextInput
     {
-        $name ??= config()->string('loom.components.password_confirmation.name', 'password_confirmation');
+        $name ??= loom()->config('components.password_confirmation.name', 'password_confirmation');
 
         return TextInput::make($name)
             ->password()
@@ -22,6 +22,6 @@ class PasswordConfirmationField extends Field
             ->required(fn (?Model $record) => $record === null)
             ->visible(fn (?Model $record) => $record === null || $record->exists)
             ->dehydrated(config()->boolean('loom.components.password_confirmation.desydrated', false))
-            ->label(__('loom::components.password_confirmation'));
+            ->label(loom()->trans('components.password_confirmation'));
     }
 }

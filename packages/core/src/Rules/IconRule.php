@@ -24,7 +24,7 @@ class IconRule implements ValidationRule
         $icon = Str::kebab($icon);
         $icons = array_column(Heroicon::cases(), 'value', 'value');
         if (! in_array($icon, $icons, true)) {
-            $fail(__('loom::rules.icon', compact('icon')));
+            $fail(loom()->trans('rules.icon', compact('icon')));
         }
     }
 }

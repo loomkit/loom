@@ -10,9 +10,9 @@ class VisibleField extends Field
 {
     public static function make(?string $name = null): Toggle
     {
-        $name ??= config()->string('loom.components.visible.name', 'visible');
+        $name ??= loom()->config('components.visible.name', 'visible');
 
         return Toggle::make($name)
-            ->label(__('loom::components.visible'));
+            ->label(loom()->trans('components.visible'));
     }
 }

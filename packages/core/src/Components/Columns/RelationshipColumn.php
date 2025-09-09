@@ -27,6 +27,6 @@ class RelationshipColumn extends NameColumn
         $related = Str::camel($related);
 
         return parent::make("{$related}.{$titleAttribute}")
-            ->label(__('loom::components.parent'));
+            ->label(loom()->trans('components.parent'));
     }
 }

@@ -10,7 +10,7 @@ class PhotoColumn extends AvatarColumn
 {
     public static function make(?string $name = null): ImageColumn
     {
-        $name ??= config()->string('loom.components.photo.name', 'photo_path');
+        $name ??= loom()->config('components.photo.name', 'photo_path');
 
         return parent::make($name)
             ->label(__('loom.components.photo'));

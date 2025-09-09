@@ -16,11 +16,11 @@ class ParentField extends RelationshipField
         bool $ignoreRecord = false
     ): Select {
         return parent::make(
-            $name ?? config()->string('loom.components.parent.name', 'parent_id'),
-            $titleAttribute ?? config()->string('loom.components.parent.title_attribute', 'name'),
+            $name ?? loom()->config('components.parent.name', 'parent_id'),
+            $titleAttribute ?? loom()->config('components.parent.title_attribute', 'name'),
             $modifyQueryUsing,
             $ignoreRecord
         )
-            ->label(__('loom::components.parent'));
+            ->label(loom()->trans('components.parent'));
     }
 }

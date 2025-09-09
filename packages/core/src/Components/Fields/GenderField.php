@@ -15,18 +15,18 @@ class GenderField extends Field
         ?Closure $modifyQueryUsing = null,
         bool $ignoreRecord = false
     ): Select {
-        $name ??= config()->string('loom.components.gender.name', 'gender');
+        $name ??= loom()->config('components.gender.name', 'gender');
         /** @var array<string, string> */
         $options = config()->array(
             'loom.components.gender.options',
             [
-                'male' => __('loom::components.male'),
-                'female' => __('loom::components.female'),
+                'male' => loom()->trans('components.male'),
+                'female' => loom()->trans('components.female'),
             ]
         );
 
         return Select::make($name)
             ->options($options)
-            ->label(__('loom::components.gender'));
+            ->label(loom()->trans('components.gender'));
     }
 }

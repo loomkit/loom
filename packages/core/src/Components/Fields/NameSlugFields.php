@@ -24,8 +24,8 @@ class NameSlugFields extends Fields
      */
     public static function make(?array $schema = null): parent
     {
-        $name = config()->string('loom.components.name.name', 'name');
-        $slug = config()->string('loom.components.slug.name', 'slug');
+        $name = loom()->config('components.name.name', 'name');
+        $slug = loom()->config('components.slug.name', 'slug');
 
         return parent::make($schema ?? [
             $name => NameField::make($name)

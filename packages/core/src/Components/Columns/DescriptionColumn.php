@@ -10,7 +10,7 @@ class DescriptionColumn extends Column
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config()->string('loom.components.description.name', 'description');
+        $name ??= loom()->config('components.description.name', 'description');
 
         return TextColumn::make($name)
             ->sortable()
@@ -19,6 +19,6 @@ class DescriptionColumn extends Column
             ->words(12)
             ->limit(48)
             ->lineClamp(1)
-            ->label(__('loom::components.description'));
+            ->label(loom()->trans('components.description'));
     }
 }

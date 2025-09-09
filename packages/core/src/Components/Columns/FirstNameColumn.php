@@ -10,9 +10,9 @@ class FirstNameColumn extends NameColumn
 {
     public static function make(?string $name = null): TextColumn
     {
-        $name ??= config()->string('loom.components.first_name.name', 'first_name');
+        $name ??= loom()->config('components.first_name.name', 'first_name');
 
         return parent::make($name)
-            ->label(__('loom::components.first_name'));
+            ->label(loom()->trans('components.first_name'));
     }
 }

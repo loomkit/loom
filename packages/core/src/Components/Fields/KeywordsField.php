@@ -10,9 +10,9 @@ class KeywordsField extends TagsField
 {
     public static function make(?string $name = null): TagsInput
     {
-        $name ??= config()->string('loom.components.keywords.name', 'keywords');
+        $name ??= loom()->config('components.keywords.name', 'keywords');
 
         return parent::make($name)
-            ->label(__('loom::components.keywords'));
+            ->label(loom()->trans('components.keywords'));
     }
 }
