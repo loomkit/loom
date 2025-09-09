@@ -73,8 +73,7 @@ class LoomPanel extends Panel
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->plugin(LoomPlugin::make());
+            ]);
 
         if ($config) {
             foreach ($config as $key => $value) {

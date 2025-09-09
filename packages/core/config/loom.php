@@ -1,19 +1,23 @@
 <?php
 
 return [
-    'panels' => [
-        'default' => env('PANEL_ID', 'app'),
+    'defaults' => [
+        'panel' => [
+            'id' => env('PANEL_ID', 'app'),
+        ],
+    ],
 
+    'panels' => [
         'app' => [
-            'guard' => env('AUTH_GUARD', 'web'),
             'id' => env('PANEL_ID', 'app'),
             'path' => env('PANEL_PATH', 'app'),
+            'auth_guard' => env('AUTH_GUARD', 'web'),
         ],
 
         'admin' => [
-            'guard' => env('ADMIN_AUTH_GUARD', 'admin'),
             'id' => env('ADMIN_PANEL_ID', 'admin'),
             'path' => env('ADMIN_PANEL_PATH', 'admin'),
+            'auth_guard' => env('ADMIN_AUTH_GUARD', 'admin'),
         ],
     ],
 

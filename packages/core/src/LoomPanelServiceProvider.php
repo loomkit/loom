@@ -14,7 +14,9 @@ abstract class LoomPanelServiceProvider extends ServiceProvider
     public function register(): void
     {
         Filament::registerPanel(
-            fn (): LoomPanel => $this->panel(LoomPanel::make()),
+            fn (): LoomPanel => $this
+                ->panel(LoomPanel::make())
+                ->plugin(LoomPlugin::make()),
         );
     }
 }
