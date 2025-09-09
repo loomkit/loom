@@ -38,7 +38,7 @@ abstract class LoomPanelProvider extends FilamentPanelProvider
             ->globalSearch()
             ->globalSearchFieldKeyBindingSuffix()
             ->globalSearchKeyBindings(['command+k', 'ctrl+k', '/'])
-            ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
+            ->globalSearchFieldSuffix(fn () => match (Platform::detect()) {
                 Platform::Windows, Platform::Linux => 'CTRL+K',
                 Platform::Mac => '⌘K',
                 default => '/',
