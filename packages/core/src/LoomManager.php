@@ -9,6 +9,12 @@ use Throwable;
 
 /**
  * @api
+ *
+ * @phpstan-type TPanelConfig array{id?: string, path: string, ...}
+ * @phpstan-type TPanelsConfig array<string, TPanelConfig>
+ * @phpstan-type TComponentConfig array<string, string>
+ * @phpstan-type TComponentsConfig array<string, TComponentConfig>
+ * @phpstan-type TConfig array{panels: TPanelsConfig, components: TComponentsConfig}
  */
 final class LoomManager
 {
@@ -139,7 +145,7 @@ TXT;
     }
 
     /**
-     * @param  string|array{id: string, path:string, ...}  $config
+     * @param  string|TPanelConfig  $config
      */
     public function panel(string|array $config): LoomPanel
     {
@@ -160,10 +166,24 @@ TXT;
      * @template TValue of mixed
      *
      * @param  TValue  $default
-     * @return ($default is null ? mixed : TValue)
+     * @return ($key is null ? TConfig : ($key is string ? ($default is null ? mixed : TValue) : array))
      */
-    public function config(string $key, mixed $default = null): mixed
+    public function config(string|array|null $key = null, mixed $default = null): mixed
     {
+        if (is_null($key)) {
+            return config('loom');
+        }
+
+        if (is_array($key)) {
+            $options = [];
+            foreach ($key as $k => $v) {
+                $options["loom.{$k}"] = $v;
+            }
+            config($options);
+
+            return $key;
+        }
+
         return config("loom.{$key}", $default);
     }
 
