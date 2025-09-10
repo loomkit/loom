@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Loom;
 
+use Filament\Facades\Filament;
+use Filament\PanelRegistry;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -139,10 +141,37 @@ TXT;
     }
 
     /**
+     * @param  int|array{id: string, path:string, ...}  $config
+     */
+    public function panel(int|array $config): LoomPanel
+    {
+        if (is_int($config)) {
+            $config = ['id' => $config];
+        }
+
+        $panel = app(PanelRegistry::class)->get($config['id']);
+        if ($panel instanceof LoomPanel) {
+            return $panel;
+        }
+
+        $defaultConfig = $this->config('defaults.panel', ['id' => 'app']);
+
+        $panel = LoomPanel::make([...$defaultConfig, ...$config])
+            ->default($config['id'] === $defaultConfig['id'])
+            ->pages([
+                Pages\Dashboard::class,
+            ]);
+
+        Filament::registerPanel($panel);
+
+        return $panel;
+    }
+
+    /**
      * @template TValue of mixed
      *
      * @param  TValue  $default
-     * @return ($default is null ? TValue|null : TValue)
+     * @return ($default is null ? mixed : TValue)
      */
     public function config(string $key, mixed $default = null): mixed
     {

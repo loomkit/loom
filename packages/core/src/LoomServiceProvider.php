@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Loom;
 
-use Filament\Facades\Filament;
 use Loom\Commands\InstallCommand;
 use Loom\Commands\MakeColumnCommand;
 use Loom\Commands\MakeFieldCommand;
@@ -89,17 +88,12 @@ class LoomServiceProvider extends LoomPackageServiceProvider
 
     protected function registerPanels(): void
     {
-        $defaultConfig = loom()->config('defaults.panel', []);
+        /** @var list<array{id?: string, path: string, ...}> */
         $panels = loom()->config('panels');
 
         foreach ($panels as $id => $config) {
             $config['id'] ??= $id;
-            $panel = LoomPanel::make([...$defaultConfig, ...$config])
-                ->default(isset($defaultConfig['id']) && $config['id'] === $defaultConfig['id'])
-                ->pages([
-                    Pages\Dashboard::class,
-                ]);
-            Filament::registerPanel($panel);
+            loom()->panel($config);
         }
     }
 
