@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Loom;
 
-use Filament\Facades\Filament;
-use Filament\PanelRegistry;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -141,30 +139,21 @@ TXT;
     }
 
     /**
-     * @param  int|array{id: string, path:string, ...}  $config
+     * @param  string|array{id: string, path:string, ...}  $config
      */
-    public function panel(int|array $config): LoomPanel
+    public function panel(string|array $config): LoomPanel
     {
-        if (is_int($config)) {
-            $config = ['id' => $config];
+        if (is_string($config)) {
+            $config = ['id' => $config, 'path' => $config];
         }
 
-        $panel = app(PanelRegistry::class)->get($config['id']);
-        if ($panel instanceof LoomPanel) {
-            return $panel;
-        }
+        $defaultConfig = loom()->config('defaults.panel', ['id' => 'app']);
 
-        $defaultConfig = $this->config('defaults.panel', ['id' => 'app']);
-
-        $panel = LoomPanel::make([...$defaultConfig, ...$config])
+        return LoomPanel::make([...$defaultConfig, ...$config])
             ->default($config['id'] === $defaultConfig['id'])
             ->pages([
                 Pages\Dashboard::class,
             ]);
-
-        Filament::registerPanel($panel);
-
-        return $panel;
     }
 
     /**

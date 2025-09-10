@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Loom;
 
+use Filament\Facades\Filament;
 use Loom\Commands\InstallCommand;
 use Loom\Commands\MakeColumnCommand;
 use Loom\Commands\MakeFieldCommand;
@@ -93,7 +94,9 @@ class LoomServiceProvider extends LoomPackageServiceProvider
 
         foreach ($panels as $id => $config) {
             $config['id'] ??= $id;
-            loom()->panel($config);
+            Filament::registerPanel(
+                loom()->panel($config)
+            );
         }
     }
 
