@@ -10,10 +10,10 @@ use Throwable;
 /**
  * @api
  *
- * @phpstan-type TPanelConfig array{id?: string, path: string, ...}
- * @phpstan-type TPanelsConfig array<string, TPanelConfig>
- * @phpstan-type TComponentConfig array<string, string>
- * @phpstan-type TComponentsConfig array<string, TComponentConfig>
+ * @phpstan-type TPanelOptions array{id?: string, path: string, ...}
+ * @phpstan-type TPanelsConfig array<string, TPanelOptions>
+ * @phpstan-type TComponentOptions array<string, string>
+ * @phpstan-type TComponentsConfig array<string, TComponentOptions>
  * @phpstan-type TConfig array{panels: TPanelsConfig, components: TComponentsConfig}
  */
 final class LoomManager
@@ -145,18 +145,18 @@ TXT;
     }
 
     /**
-     * @param  string|TPanelConfig  $config
+     * @param  string|TPanelOptions  $options
      */
-    public function panel(string|array $config): LoomPanel
+    public function panel(string|array $options): LoomPanel
     {
-        if (is_string($config)) {
-            $config = ['id' => $config, 'path' => $config];
+        if (is_string($options)) {
+            $options = ['id' => $options, 'path' => $options];
         }
 
-        $defaultConfig = loom()->config('defaults.panel', ['id' => 'app']);
+        $defaultOptions = loom()->config('defaults.panel', ['id' => 'app']);
 
-        return LoomPanel::make([...$defaultConfig, ...$config])
-            ->default($config['id'] === $defaultConfig['id'])
+        return LoomPanel::make([...$defaultOptions, ...$options])
+            ->default($options['id'] === $defaultOptions['id'])
             ->pages([
                 Pages\Dashboard::class,
             ]);

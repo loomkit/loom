@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string slug()
  * @method static string logo(?string $newLogo = null)
  * @method static LoomPlugin plugin()
- * @method static LoomPanel panel(string|array $config)
+ * @method static LoomPanel panel(string|array $options)
  * @method static mixed config(string $key, mixed $default = null)
  * @method static string|array trans(string $key, array $replace = [], ?string $locale = null)
  * @method static string useSimpleLogo()
