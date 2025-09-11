@@ -359,4 +359,10 @@ class NewCommand extends BaseCommand
         return $this->usingStarterKit($input) &&
                str_starts_with($this->getStarterKit($input), 'loomkit/');
     }
+
+    #[Override]
+    public function defaultBranch(): string
+    {
+        return parent::defaultBranch();
+    }
 }

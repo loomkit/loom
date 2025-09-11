@@ -14,5 +14,6 @@ final class Application extends BaseApplication
         parent::__construct('Loom Installer', LoomManager::VERSION);
 
         $this->add(new NewCommand);
+        $this->add(new CreateCommand);
     }
 }
