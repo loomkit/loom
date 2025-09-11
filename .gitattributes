@@ -1,4 +1,5 @@
-* text=auto
+* text=auto eol=lf
+*.bat eol=crlf
 
 *.css diff=css
 *.html diff=html
@@ -14,9 +15,12 @@
 *.jpg binary
 *.jpeg binary
 
-/src/Program.php export-ignore
-/tests/Feat/ExampleTest.php export-ignore
-/tests/Unit/ProgramTest.php export-ignore
+*.v linguist-language=V
+*.vv linguist-language=V
+*.vsh linguist-language=V
+v.mod linguist-language=V
+.vdocignore linguist-language=ignore
+
 # CHANGELOG.md export-ignore
 # .editorconfig export-ignore
 # .gitattributes export-ignore

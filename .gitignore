@@ -1,27 +1,41 @@
-# Build
+# Binaries for programs and plugins
+/main
+/loom
+/*.exe
+/*.exe~
+/*.so
+/*.dylib
+/*.dll
+
+# Binary output folders
+bin/*
+!bin/loom
+dist/
+
+#Development files and directories
+node_modules/
+vendor/
+.yarn/*
+!.yarn/releases
+public/hot
 build/
 dist/
 out/
-
-# Development
-/node_modules/
-/vendor/
-.yarn/*
-!.yarn/releases
 Homestead.json
 Homestead.yaml
+tsconfig.tsbuildinfo
 .phpactor.json
 *.local
+*.db
 
 # Environment
 .env
 .env.backup
 
 # Cache
+.cache
 *.cache
 .mf
-.rollup.cache
-tsconfig.tsbuildinfo
 
 # Logs
 logs/
@@ -33,7 +47,7 @@ pnpm-debug.log*
 lerna-debug.log*
 error_log*
 
-# Editor
+# Common editor/system specific metadata
 .vscode/*
 !.vscode/extensions.json
 .idea/
@@ -43,6 +57,7 @@ error_log*
 *.njsproj
 *.sln
 *.sw?
+*.iml
 
 # Tests
 /test-results/
