@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Loom\Installer;
+namespace Loom\Installer\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;

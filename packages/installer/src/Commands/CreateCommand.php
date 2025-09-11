@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Loom\Installer;
+namespace Loom\Installer\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;

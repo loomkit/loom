@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Loom\Installer\Application;
-use Loom\Installer\NewCommand;
+use Loom\Installer\Commands\NewCommand;
 use Loom\LoomManager;
 use Symfony\Component\Console\Tester\CommandTester;
 
