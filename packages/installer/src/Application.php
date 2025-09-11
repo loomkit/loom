@@ -15,5 +15,6 @@ final class Application extends BaseApplication
 
         $this->add(new Commands\NewCommand);
         $this->add(new Commands\CreateCommand);
+        $this->add(new Commands\InitCommand);
     }
 }
