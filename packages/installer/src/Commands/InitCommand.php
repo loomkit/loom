@@ -58,29 +58,29 @@ class InitCommand extends Command
         $this->directory = $directory;
 
         $this->runCommands([
-            $this->composer().' require loomkit/core',
-            $this->php().' artisan loom:install',
+            $this->composer('require', 'loomkit/core'),
+            $this->php('artisan', 'loom:install'),
         ], $input, $output, $directory);
 
         return self::SUCCESS;
     }
 
-    protected function php(): string
+    protected function php(string ...$args): string
     {
         if (! isset($this->php)) {
             $this->php = $this->findPhp();
         }
 
-        return $this->php;
+        return $this->binaryCommand($this->php, ...$args);
     }
 
-    protected function composer(): string
+    protected function composer(string ...$args): string
     {
         if (! isset($this->composer)) {
             $this->composer = $this->findComposer();
         }
 
-        return $this->composer;
+        return $this->binaryCommand($this->composer, ...$args);
     }
 
     protected function findPhp(): string
@@ -97,6 +97,11 @@ class InitCommand extends Command
     protected function findComposer(): string
     {
         return implode(' ', (new Composer(new Filesystem, $this->directory))->findComposer());
+    }
+
+    protected function binaryCommand(string $bin, string ...$args): string
+    {
+        return implode(' ', [$bin, ...$args]);
     }
 
     protected function runCommands($commands, InputInterface $input, OutputInterface $output, ?string $workingPath = null, array $env = []): Process
