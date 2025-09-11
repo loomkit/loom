@@ -15,6 +15,9 @@ class DetailedDescriptionField extends Field
         return RichEditor::make($name)
             ->minLength(config()->integer('loom.components.detailed_description.min_length', 8))
             ->columnSpanFull()
+            ->fileAttachmentsDisk(loom()->config('components.file.disk', 'public'))
+            ->fileAttachmentsDirectory(loom()->config('components.file.directory', 'uploads'))
+            ->fileAttachmentsVisibility(loom()->config('components.file', 'public'))
             ->label(loom()->trans('components.detailed_description'));
     }
 }
