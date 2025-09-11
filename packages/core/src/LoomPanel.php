@@ -24,12 +24,7 @@ use Override;
 
 class LoomPanel extends Panel
 {
-    protected LoomManager $loom;
-
-    public function __construct()
-    {
-        $this->loom = loom();
-    }
+    public function __construct(public readonly LoomManager $loom) {}
 
     #[Override]
     public static function make(?array $config = null): static
