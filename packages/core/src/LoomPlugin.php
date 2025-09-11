@@ -9,9 +9,11 @@ use Filament\Panel;
 
 class LoomPlugin implements Plugin
 {
+    public function __construct(public readonly LoomManager $loom) {}
+
     public function getId(): string
     {
-        return Loom::slug();
+        return $this->loom->slug();
     }
 
     public static function make(): self
