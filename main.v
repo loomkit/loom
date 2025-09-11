@@ -1,5 +1,9 @@
 module main
 
+import installer
+
 fn main() {
-	println('Welcome to Loom !')
+	mut app := installer.new_app()
+
+	app.run()
 }
