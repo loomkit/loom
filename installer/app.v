@@ -1,7 +1,7 @@
 module installer
 
 import os
-import cli
+import cli { Command }
 import term
 
 const logo = '
@@ -14,14 +14,14 @@ const logo = '
 '
 
 pub struct App {
-	cli.Command
+	Command
 }
 
 pub fn new_app() App {
-	return App{cli.Command{
+	mut app := App{Command{
 		name:        'loom'
 		description: '${term.blue('Loom')} — The Next-Generation Modular Digital Platform'
-		execute:     fn (cmd cli.Command) ! {
+		execute:     fn (cmd Command) ! {
 			args := cmd.args
 			mut code := 1
 			if args.len < 1 {
@@ -33,6 +33,17 @@ pub fn new_app() App {
 			exit(code)
 		}
 	}}
+
+	app.add(new_command())
+	app.add(init_command())
+	app.add(create_command())
+
+	return app
+}
+
+pub fn (mut app App) add(cmd Command) App {
+	app.commands << cmd
+	return app
 }
 
 pub fn (mut app App) run() {
