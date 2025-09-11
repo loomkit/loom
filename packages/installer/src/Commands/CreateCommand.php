@@ -23,8 +23,8 @@ class CreateCommand extends Command
         $this
             ->setName('create')
             ->setDescription('Create a new Loom application from a custom starter kit')
-            ->addArgument('name', InputArgument::REQUIRED)
-            ->addArgument('starter', InputArgument::REQUIRED, 'The starter kit from a community maintained package')
+            ->addArgument('starter', InputArgument::REQUIRED, 'The starter kit')
+            ->addArgument('name', InputArgument::REQUIRED, 'The project name')
             ->addOption('dev', null, InputOption::VALUE_NONE, 'Install the latest "development" release')
             ->addOption('git', null, InputOption::VALUE_NONE, 'Initialize a Git repository')
             ->addOption('branch', null, InputOption::VALUE_OPTIONAL, 'The branch that should be created for a new repository')
