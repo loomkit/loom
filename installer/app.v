@@ -1,8 +1,8 @@
 module installer
 
-import os
 import cli { Command }
 import term
+import console
 
 const logo = '
  ██╗       ██████╗   ██████╗  ███╗   ███╗
@@ -13,13 +13,10 @@ const logo = '
  ╚══════╝  ╚═════╝   ╚═════╝  ╚═╝     ╚═╝
 '
 
-pub struct App {
-	Command
-}
-
-pub fn new_app() App {
-	mut app := App{Command{
+pub fn app() console.Application {
+	mut app := console.new_application(
 		name:        'loom'
+		logo:        logo
 		description: '${term.blue('Loom')} — The Next-Generation Modular Digital Platform'
 		execute:     fn (cmd Command) ! {
 			args := cmd.args
@@ -32,21 +29,36 @@ pub fn new_app() App {
 			println(h)
 			exit(code)
 		}
-	}}
+	)
 
-	app.add(new_command())
-	app.add(init_command())
-	app.add(create_command())
+	app.add(
+		name:        'new'
+		description: 'Create a new ${term.blue('Loom')} application'
+	)
+
+	app.add(
+		name:        'init'
+		description: 'Initialize ${term.blue('Loom')} in the current project'
+		execute:     fn (cmd Command) ! {
+			args := cmd.args
+			dir := if args.len < 1 {
+				'.'
+			} else {
+				args[0]
+			}
+			if !is_dir(dir) {
+				println(term.red('${dir} is not a directory'))
+				return
+			}
+			composer(['require', 'loomkit/core'], dir)
+			php(['artisan', 'loom:install'], dir)
+		}
+	)
+
+	app.add(
+		name:        'create'
+		description: 'Create a new ${term.blue('Loom')} application from a custom starter kit'
+	)
 
 	return app
-}
-
-pub fn (mut app App) add(cmd Command) App {
-	app.commands << cmd
-	return app
-}
-
-pub fn (mut app App) run() {
-	app.setup()
-	app.parse(os.args)
 }
