@@ -16,24 +16,10 @@ pub fn composer(args []string, work_dir string) int {
 pub fn exec(cmd string, args []string, work_dir string) int {
 	mut p := os.new_process(cmd)
 	p.set_args(args)
-	p.set_redirect_stdio()
 	p.set_work_folder(work_dir)
 	p.run()
-	for {
-		if p.is_pending(.stdout) {
-			println(p.stdout_read())
-		} else if p.is_pending(.stderr) {
-			eprintln(p.stderr_read())
-		} else {
-			break
-		}
-	}
 	p.wait()
 	return p.code
-}
-
-@[inline]
-pub fn run_commands(cmds []string, work_dir string) {
 }
 
 @[inline]
