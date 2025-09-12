@@ -3,18 +3,44 @@ module installer
 import os
 
 @[inline]
-pub fn php(args ...string) string {
-	return exec(find_php(), ...args)
+pub fn php(args []string, work_dir string) int {
+	return exec(find_php(), args, work_dir)
 }
 
 @[inline]
-pub fn composer(args ...string) string {
-	return exec(find_composer(), ...args)
+pub fn composer(args []string, work_dir string) int {
+	return exec(find_composer(), args, work_dir)
 }
 
 @[inline]
-pub fn exec(cmd string, args ...string) string {
-	return os.execute([cmd, args.join(' ')].join(' ').trim(' ')).output
+pub fn exec(cmd string, args []string, work_dir string) int {
+	mut p := os.new_process(cmd)
+	p.set_args(args)
+	p.set_redirect_stdio()
+	p.set_work_folder(work_dir)
+	p.run()
+	for {
+		if p.is_pending(.stdout) {
+			println(p.stdout_read())
+		} else if p.is_pending(.stderr) {
+			eprintln(p.stderr_read())
+		} else {
+			break
+		}
+	}
+	p.wait()
+	return p.code
+}
+
+@[inline]
+pub fn run_commands(cmds []string, work_dir string) {
+}
+
+@[inline]
+pub fn binary_command(cmd string, args []string) map[string][]string {
+	return {
+		cmd: args
+	}
 }
 
 @[inline]

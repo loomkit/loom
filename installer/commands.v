@@ -26,12 +26,8 @@ pub fn init_command() Command {
 				println(term.red('${dir} is not a directory'))
 				return
 			}
-			chdir(dir) or {
-				eprintln(term.red(err.msg()))
-				return
-			}
-			println(composer('require', 'loomkit/core'))
-			println(php('artisan', 'loom:install'))
+			composer(['require', 'loomkit/core'], dir)
+			php(['artisan', 'loom:install'], dir)
 		}
 	}
 	return cmd
