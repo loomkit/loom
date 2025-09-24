@@ -17,7 +17,7 @@ class DetailedDescriptionField extends Field
             ->columnSpanFull()
             ->fileAttachmentsDisk(loom()->config('components.file.disk', 'public'))
             ->fileAttachmentsDirectory(loom()->config('components.file.directory', 'uploads'))
-            ->fileAttachmentsVisibility(loom()->config('components.file', 'public'))
+            ->fileAttachmentsVisibility(loom()->config('components.file.visibility', 'public'))
             ->label(loom()->trans('components.detailed_description'));
     }
 }
