@@ -81,4 +81,52 @@ class LoomPanel extends Panel
 
         return $static;
     }
+
+    public function roles(string $role, string ...$roles): static
+    {
+        foreach ([$role, ...$roles] as $role) {
+            $this->role($role);
+        }
+
+        return $this;
+    }
+
+    public function role(string $role): static
+    {
+        $this->authMiddleware(["role:{$role}"]);
+
+        return $this;
+    }
+
+    public function permissions(string $permission, string ...$permissions): static
+    {
+        foreach ([$permission, ...$permissions] as $permission) {
+            $this->permission($permission);
+        }
+
+        return $this;
+    }
+
+    public function permission(string $permission): static
+    {
+        $this->authMiddleware(["permission:{$permission}"]);
+
+        return $this;
+    }
+
+    public function rolesOrPermissions(string $role_or_permission, string ...$roles_or_permissions): static
+    {
+        foreach ([$role_or_permission, ...$roles_or_permissions] as $role_or_permission) {
+            $this->roleOrPermission($role_or_permission);
+        }
+
+        return $this;
+    }
+
+    public function roleOrPermission(string $role_or_permission): static
+    {
+        $this->authMiddleware(["role_or_permission:{$role_or_permission}"]);
+
+        return $this;
+    }
 }
