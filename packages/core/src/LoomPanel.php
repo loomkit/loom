@@ -26,6 +26,11 @@ class LoomPanel extends Panel
 {
     public function __construct(public readonly LoomManager $loom) {}
 
+    public function hasId(): bool
+    {
+        return isset($this->id);
+    }
+
     #[Override]
     public static function make(?array $options = null): static
     {
