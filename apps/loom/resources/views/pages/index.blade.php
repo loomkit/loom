@@ -20,7 +20,7 @@
         </style>
         @endif
     </head>
-    <body class="bg-black text-white font-sans">
+    <body class="antialiased font-sans bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
         <!-- Navigation -->
         <header class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur border-b border-white/10">
             <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
@@ -37,18 +37,21 @@
                     <a href="#docs" class="hover:text-white">{{ __('Documentation') }}</a>
                     <a href="#contact" class="hover:text-white">{{ __('Contact') }}</a>
                 </nav>
-                <div class="md:hidden">
-                    <button onclick="toggleMenu()" class="focus:outline-none">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                <div class="flex items-center justify-center space-x-3">
+                    @include('partials.theme-switcher')
+                    @auth
+                    <a href="{{ route('dashboard') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Dashboard') }}</a>
+                    @else
+                    <a href="{{ route('login') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Login') }}</a>
+                    @endif
+                    <div class="md:hidden">
+                        <s-button onclick="toggleMenu()" class="cursor-pointer focus:outline-none">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </s-button>
+                    </div>
                 </div>
-                @auth
-                <a href="{{ route('dashboard') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Dashboard') }}</a>
-                @else
-                <a href="{{ route('login') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Login') }}</a>
-                @endif
             </div>
             <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
                 <a href="#about" class="block py-2 text-gray-300 hover:text-white">{{ __('About') }}</a>
