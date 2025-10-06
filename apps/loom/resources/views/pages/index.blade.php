@@ -96,7 +96,7 @@
         <x-landing.section id="pricing" title="Our Plans" tagline="Choose the plan that fits your needs: independent, startup, or enterprise." gradient="to-b" from="blue" to="pure">
             <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <x-landing.pricing-card title="Starter" content="Perfect for getting started" price="0" :features="['Basic access', 'Full documentation', 'Community support']" href="#get-started" action="Get Started"/>
-                <x-landing.pricing-card title="Pro" content="For professionals" price="29" :features="['Everything in Starter', 'Advanced tools', 'Priority support']" action="Subscribe" href="#get-started"/>
+                <x-landing.pricing-card title="Pro" content="For professionals" price="29" :features="['Everything in Starter', 'Advanced tools', 'Priority support']" action="Subscribe" href="#get-started" highlight/>
                 <x-landing.pricing-card title="Enterprise" content="For large organizations" :features="['Full customization', 'Dedicated SLA', 'Premium support']" href="#contact" action="Contact Us">
                     <p class="text-3xl font-extrabold mt-6">{{ __('Custom Pricing') }}</p>
                 </x-landing.pricing-card>

@@ -2,8 +2,9 @@
     'title',
     'icon' => null,
     'content' => null,
+    'highlight' => false,
 ])
-<div {{ $attributes->class('p-8 rounded-2xl bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 hover:scale-105 transition-transform') }}>
+<div {{ $attributes->class(['p-8 rounded-2xl bg-gray-100 dark:bg-gray-900 hover:scale-105 transition-transform', 'border border-gray-200 dark:border-gray-700' => !$highlight, 'border-2 border-blue-500' => $highlight]) }}>
     @isset($image)
     <img src="https://source.unsplash.com/random/400x250?dashboard" alt="{{ $title }}" class="w-full" />
     @endisset

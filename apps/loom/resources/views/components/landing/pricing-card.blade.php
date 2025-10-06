@@ -5,9 +5,10 @@
     'price',
     'href',
     'action' => null,
+    'highlight' => false,
     'features' => [],
 ])
-<x-landing.card :$title :$icon :$content {{ $attributes }}>
+<x-landing.card :$title :$icon :$content :$highlight {{ $attributes->class(['bg-gradient-to-tr from-indigo-100 dark:from-indigo-900 to-purple-100 dark:to-purple-900' => $highlight]) }}>
     @isset($price)
     <p class="text-3xl font-extrabold mt-6">{{ $price }} XOF <span class="text-lg font-normal">/month</span></p>
     @endisset
