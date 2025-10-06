@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', 'dark');
     document.documentElement.classList.remove('light');
     document.documentElement.classList.add('dark');
-    switcher.innerHTML = '🌙';
+    switcher.innerHTML = '☀️';
   };
 
   const useLightTheme = () => {
     localStorage.setItem('theme', 'light');
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('light');
-    switcher.innerHTML = '☀️';
+    switcher.innerHTML = '🌙';
   };
 
   isDarkMode()

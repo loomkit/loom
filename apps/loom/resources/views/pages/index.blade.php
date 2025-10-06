@@ -20,9 +20,9 @@
         </style>
         @endif
     </head>
-    <body class="antialiased font-sans bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <body class="antialiased font-sans bg-white dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300">
         <!-- Navigation -->
-        <header class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur border-b border-white/10">
+        <header class="fixed top-0 left-0 w-full z-50 bg:white/50 dark:bg-black/50 backdrop-blur border-b border-black/10 dark:border-white/10">
             <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
                 <h1 class="text-2xl font-extrabold text-blue-500">
                     <a href="{{ url('/') }}" class="inline-flex items-center text-blue-500">
@@ -30,23 +30,15 @@
                         {{ config('app.name') }}
                     </a>
                 </h1>
-                <nav class="hidden md:flex space-x-8 text-gray-300">
-                    <a href="#about" class="hover:text-white">{{ __('About') }}</a>
-                    <a href="#features" class="hover:text-white">{{ __('Features') }}</a>
-                    <a href="#pricing" class="hover:text-white">{{ __('Pricing') }}</a>
-                    <a href="#docs" class="hover:text-white">{{ __('Documentation') }}</a>
-                    <a href="#contact" class="hover:text-white">{{ __('Contact') }}</a>
+                <nav class="hidden md:flex space-x-8 text-gray-700 dark:text-gray-300">
+                    <x-nav.links/>
                 </nav>
                 <div class="flex items-center justify-center space-x-3">
                     @include('partials.theme-switcher')
-                    @auth
-                    <a href="{{ route('dashboard') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Dashboard') }}</a>
-                    @else
-                    <a href="{{ route('login') }}" class="hidden md:inline-block px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Login') }}</a>
-                    @endif
+                    <x-nav.buttons/>
                     <div class="md:hidden">
                         <s-button onclick="toggleMenu()" class="cursor-pointer focus:outline-none">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-black dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
                         </s-button>
@@ -54,221 +46,85 @@
                 </div>
             </div>
             <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
-                <a href="#about" class="block py-2 text-gray-300 hover:text-white">{{ __('About') }}</a>
-                <a href="#features" class="block py-2 text-gray-300 hover:text-white">{{ __('Features') }}</a>
-                <a href="#pricing" class="block py-2 text-gray-300 hover:text-white">{{ __('Pricing') }}</a>
-                <a href="#docs" class="block py-2 text-gray-300 hover:text-white">{{ __('Documentation') }}</a>
-                <a href="#contact" class="block py-2 text-gray-300 hover:text-white">{{ __('Contact') }}</a>
-                @auth
-                <a href="{{ route('dashboard') }}" class="block py-2 mt-2 px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Dashboard') }}</a>
-                @else
-                <a href="{{ route('login') }}" class="block py-2 mt-2 px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Login') }}</a>
-                @endif
+                <x-nav.links mobile/>
+                <x-nav.buttons mobile/>
             </div>
         </header>
 
-        <!-- Hero -->
         <section class="relative h-screen flex flex-col items-center justify-center text-center px-6">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-black to-purple-900 opacity-70"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-sky-200 dark:from-sky-800 via-white dark:via-black to-indigo-200 dark:to-indigo-800 opacity-70"></div>
             <h2 class="relative text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
                 {{ __('Develop Applications') }} <span class="text-blue-500">{{ __('in seconds') }}</span>
             </h2>
-            <p class="relative text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-gray-300">
+            <p class="relative text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-gray-700 dark:text-gray-300">
                 @lang(':app is', ['app' => config('app.name')]) an <strong>@lang('OS for building apps')</strong>:
                 @lang('assemble ready-made modules and get a working app instantly.')
             </p>
             <div class="relative flex space-x-4">
-                <a href="#pricing" class="px-6 py-3 rounded-2xl bg-blue-500 hover:bg-blue-400 transition">{{ __('View Pricing') }}</a>
-                <a href="#docs" class="px-6 py-3 rounded-2xl border border-indigo-400 hover:bg-indigo-900 transition">{{ __('Read Docs') }}</a>
+                <a href="#pricing" class="px-6 py-3 rounded-2xl bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-400 transition">{{ __('View Pricing') }}</a>
+                <a href="#docs" class="px-6 py-3 rounded-2xl border border-indigo-600 dark:border-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition">{{ __('Read Docs') }}</a>
             </div>
             <div class="absolute bottom-8 animate-bounce">
-                <a href="#about" class="text-gray-400">↓ {{ __('Learn more') }}</a>
+                <a href="#about" class="text-gray-600 dark:text-gray-400">↓ {{ __('Learn more') }}</a>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-24 bg-gradient-to-b from-black to-indigo-950 text-center px-6">
-            <h2 class="text-4xl font-bold mb-8">{{ __('Why Loom?') }}</h2>
-            <p class="text-lg max-w-3xl mx-auto text-gray-300 mb-12">
-                {{ __('Loom is not just a platform: it’s an ecosystem for developers, businesses, and investors. A unified experience where every idea becomes reality.') }}
-            </p>
+        <x-landing.section id="about" title="Why Loom?" tagline="Loom is not just a platform: it’s an ecosystem for developers, businesses, and investors. A unified experience where every idea becomes reality." gradient="to-br" from="indigo">
             <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-indigo-700/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">⚡ {{ __('For Users') }}</h3>
-                    <p class="text-gray-400">{{ __('An intuitive and fast interface to create and manage your projects effortlessly.') }}</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-indigo-700/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">🤝 {{ __('For Sponsors') }}</h3>
-                    <p class="text-gray-400">{{ __('Associate your brand with a visionary platform and gain visibility.') }}</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-indigo-700/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">💸 {{ __('For Investors') }}</h3>
-                    <p class="text-gray-400">{{ __('Invest in the future of digital technology and participate in sustainable growth.') }}</p>
-                </div>
+                <x-landing.about-card icon="⚡" title="For Users" content="An intuitive and fast interface to create and manage your projects effortlessly" />
+                <x-landing.about-card icon="🤝" title="For Sponsors" content="Associate your brand with a visionary platform and gain visibility." />
+                <x-landing.about-card icon="💸" title="For Investors" content="Invest in the future of digital technology and participate in sustainable growth." />
             </div>
-        </section>
+        </x-landing.section>
 
-        <!-- Features -->
-        <section id="features" class="py-24 px-6 bg-gradient-to-b from-black to-blue-950 text-center">
-            <h2 class="text-4xl font-bold mb-8">{{ __('Key Features') }}</h2>
-            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-                {{ __('Whether you are a beginner or an expert, Loom makes development simple, fast, and accessible.') }}
-            </p>
+        <x-landing.section id="features" title="Key Features" tagline="Whether you are a beginner or an expert, Loom makes development simple, fast, and accessible." gradient="to-br" from="emerald">
             <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-blue-800/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">🧩 {{ __('Ready Modules') }}</h3>
-                    <p class="text-gray-400">{{ __('Choose from hundreds of blocks to assemble your application.') }}</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-blue-800/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">🚀 {{ __('Instant Deployment') }}</h3>
-                    <p class="text-gray-400">{{ __('Go from idea to final product in seconds.') }}</p>
-                </div>
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-blue-800/20 to-purple-700/20 border border-gray-800">
-                    <h3 class="text-xl font-semibold mb-4">👥 {{ __('For Everyone') }}</h3>
-                    <p class="text-gray-400">{{ __('Simple interface for newbies, powerful tools for experts.') }}</p>
-                </div>
+                <x-landing.features-card icon="🧩" title="Ready Modules" content="Choose from hundreds of blocks to assemble your application."/>
+                <x-landing.features-card icon="🚀" title="Instant Deployment" content="Go from idea to final product in seconds."/>
+                <x-landing.features-card icon="👥" title="For Everyone" content="Simple interface for newbies, powerful tools for experts."/>
             </div>
-        </section>
+        </x-landing.section>
 
-        <!-- Showcase -->
-        <section class="py-24 px-6 bg-black text-center">
-            <h2 class="text-4xl font-bold mb-8">{{ __('What You Can Build With Loom') }}</h2>
+        <x-landing.section id="showcase" title="What You Can Build With Loom">
             <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <div class="rounded-xl overflow-hidden shadow-lg bg-gray-900 border border-gray-800">
-                    <img src="https://source.unsplash.com/random/400x250?dashboard" alt="Dashboard" class="w-full" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Dashboards</h3>
-                        <p class="text-gray-400">{{ __('Create modern and powerful management interfaces.') }}</p>
-                    </div>
-                </div>
-                <div class="rounded-xl overflow-hidden shadow-lg bg-gray-900 border border-gray-800">
-                    <img src="https://source.unsplash.com/random/400x250?ecommerce" alt="E-commerce" class="w-full" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">E-commerce</h3>
-                        <p class="text-gray-400">{{ __('Deploy a full online store with one click.') }}</p>
-                    </div>
-                </div>
-                <div class="rounded-xl overflow-hidden shadow-lg bg-gray-900 border border-gray-800">
-                    <img src="https://source.unsplash.com/random/400x250?social" alt="Social" class="w-full" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Social Platforms</h3>
-                        <p class="text-gray-400">{{ __('Build an interactive social platform instantly.') }}</p>
-                    </div>
-                </div>
+                <x-landing.card class="overflow-hidden shadow-lg" title="Dashboards" content="Create modern and powerful management interfaces." image="https://source.unsplash.com/random/400x250?dashboard"/>
+                <x-landing.card class="overflow-hidden shadow-lg" title="E-commerce" content="Deploy a full online store with one click." image="https://source.unsplash.com/random/400x250?ecommerce"/>
+                <x-landing.card class="overflow-hidden shadow-lg" title="Social Platforms" content="Build an interactive social platform instantly." image="https://source.unsplash.com/random/400x250?social"/>
             </div>
-        </section>
+        </x-landing.section>
 
-        <!-- Pricing (Fusion des sections) -->
-        <section id="pricing" class="py-24 px-6 bg-gradient-to-b from-blue-950 to-black text-center">
-            <h2 class="text-4xl font-bold mb-8">{{ __('Our Plans') }}</h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-12">
-                {{ __('Choose the plan that fits your needs: independent, startup, or enterprise.') }}
-            </p>
+        <x-landing.section id="pricing" title="Our Plans" tagline="Choose the plan that fits your needs: independent, startup, or enterprise." gradient="to-b" from="blue" to="pure">
             <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Starter -->
-                <div class="p-8 rounded-2xl bg-gray-900 border border-gray-700">
-                    <h3 class="text-2xl font-bold mb-4">Starter</h3>
-                    <p class="text-gray-400 mb-6">{{ __('Perfect for getting started') }}</p>
-                    <p class="text-3xl font-extrabold mb-6">0€ <span class="text-lg font-normal">/month</span></p>
-                    <ul class="space-y-2 text-gray-400 mb-6">
-                        <li>✔️ {{ __('Basic access') }}</li>
-                        <li>✔️ {{ __('Full documentation') }}</li>
-                        <li>✔️ {{ __('Community support') }}</li>
-                    </ul>
-                    <a href="#get-started" class="block px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500">{{ __('Get Started') }}</a>
-                </div>
-                <!-- Pro -->
-                <div class="p-8 rounded-2xl bg-gradient-to-tr from-indigo-900 to-purple-900 border border-indigo-700">
-                    <h3 class="text-2xl font-bold mb-4">Pro</h3>
-                    <p class="text-gray-400 mb-6">{{ __('For professionals') }}</p>
-                    <p class="text-3xl font-extrabold mb-6">29€ <span class="text-lg font-normal">/month</span></p>
-                    <ul class="space-y-2 text-gray-300 mb-6">
-                        <li>✔️ {{ __('Everything in Starter') }}</li>
-                        <li>✔️ {{ __('Advanced tools') }}</li>
-                        <li>✔️ {{ __('Priority support') }}</li>
-                    </ul>
-                    <a href="#get-started" class="block px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500">{{ __('Subscribe') }}</a>
-                </div>
-                <!-- Enterprise -->
-                <div class="p-8 rounded-2xl bg-gray-900 border border-gray-700">
-                    <h3 class="text-2xl font-bold mb-4">Enterprise</h3>
-                    <p class="text-gray-400 mb-6">{{ __('For large organizations') }}</p>
-                    <p class="text-3xl font-extrabold mb-6">{{ __('Custom Pricing') }}</p>
-                    <ul class="space-y-2 text-gray-400 mb-6">
-                        <li>✔️ {{ __('Full customization') }}</li>
-                        <li>✔️ {{ __('Dedicated SLA') }}</li>
-                        <li>✔️ {{ __('Premium support') }}</li>
-                    </ul>
-                    <a href="#contact" class="block px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500">{{ __('Contact Us') }}</a>
-                </div>
+                <x-landing.pricing-card title="Starter" content="Perfect for getting started" price="0" :features="['Basic access', 'Full documentation', 'Community support']" href="#get-started" action="Get Started"/>
+                <x-landing.pricing-card title="Pro" content="For professionals" price="29" :features="['Everything in Starter', 'Advanced tools', 'Priority support']" action="Subscribe" href="#get-started"/>
+                <x-landing.pricing-card title="Enterprise" content="For large organizations" :features="['Full customization', 'Dedicated SLA', 'Premium support']" href="#contact" action="Contact Us">
+                    <p class="text-3xl font-extrabold mt-6">{{ __('Custom Pricing') }}</p>
+                </x-landing.pricing-card>
             </div>
-        </section>
+        </x-landing.section>
 
-        <!-- Documentation Section -->
-        <section id="docs" class="py-24 px-6 bg-gradient-to-b from-indigo-950 to-black text-center">
-            <h2 class="text-4xl font-bold mb-8">{{ __('Documentation') }}</h2>
-            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-                {{ __('Learn how to build, deploy, and manage your applications with Loom.') }}
-            </p>
-
+        <x-landing.section id="docs" title="Documentation" tagline="Learn how to build, deploy, and manage your applications with Loom." gradient="to-b" from="pure" to="purple">
             <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="p-8 rounded-2xl bg-gray-900 border border-gray-700 hover:scale-105 transition-transform">
-                    <h3 class="text-xl font-semibold mb-4">📘 {{ __('Getting Started') }}</h3>
-                    <p class="text-gray-400 mb-4">{{ __('Step-by-step guide to start building your first app.') }}</p>
-                    <a href="https://loomkit.github.io" class="inline-block mt-2 px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Read More') }}</a>
-                </div>
-
-                <div class="p-8 rounded-2xl bg-gray-900 border border-gray-700 hover:scale-105 transition-transform">
-                    <h3 class="text-xl font-semibold mb-4">⚙️ {{ __('API Reference') }}</h3>
-                    <p class="text-gray-400 mb-4">{{ __('Detailed documentation for all available modules and endpoints.') }}</p>
-                    <a href="https://loomkit.github.io" class="inline-block mt-2 px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Read More') }}</a>
-                </div>
-
-                <div class="p-8 rounded-2xl bg-gray-900 border border-gray-700 hover:scale-105 transition-transform">
-                    <h3 class="text-xl font-semibold mb-4">💡 {{ __('Tutorials & Examples') }}</h3>
-                    <p class="text-gray-400 mb-4">{{ __('Real-world examples to inspire your projects.') }}</p>
-                    <a href="https://loomkit.github.io" class="inline-block mt-2 px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Explore') }}</a>
-                </div>
+                <x-landing.docs-card icon="📘" title="Getting Started" content="Step-by-step guide to start building your first app."/>
+                <x-landing.docs-card icon="⚙️" title="API Reference" content="Detailed documentation for all available modules and endpoints."/>
+                <x-landing.docs-card icon="💡" title="Tutorials & Examples" content="Real-world examples to inspire your projects." action="Explore"/>
             </div>
-        </section>
+        </x-landing.section>
 
-        <!-- Call To Action -->
-        <section id="get-started" class="py-24 bg-gradient-to-b from-purple-900 to-black text-center px-6">
-            <h2 class="text-4xl font-bold mb-6">{{ __('Join the Loom Revolution') }}</h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
-                {{ __('Beginner or expert, Loom propels you into the future of development.') }}
-            </p>
-            <a href="{{ route('register') }}" class="px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-400 text-lg font-semibold">{{ __('Get Started Now') }}</a>
-        </section>
+        <x-landing.section id="get-started" title="Join the Loom Revolution" tagline="Beginner or expert, Loom propels you into the future of development." gradient="to-b" from="purple" to="pure">
+            <a href="{{ route('register') }}" class="px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-400 text-lg font-semibold">{{ __('Get Started Now') }}</a>
+        </x-landing.section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-24 px-6 bg-gradient-to-b from-black to-blue-950 text-center">
-            <h2 class="text-4xl font-bold mb-8">{{ __('Contact Us') }}</h2>
-            <p class="text-gray-300 mb-12 max-w-2xl mx-auto">{{ __('Questions, suggestions, or partnerships? Send us a message and we will respond quickly.') }}</p>
-            <form class="max-w-2xl mx-auto bg-gray-900 p-8 rounded-2xl border border-gray-700 space-y-6">
-                <div class="flex flex-col text-left">
-                    <label class="mb-2 text-gray-300">{{ __('Name') }}</label>
-                    <input type="text" placeholder="{{ __('Your Name') }}" class="p-3 rounded-xl bg-gray-800 border border-gray-600 focus:border-blue-500 outline-none" />
-                </div>
-                <div class="flex flex-col text-left">
-                    <label class="mb-2 text-gray-300">{{ __('Email') }}</label>
-                    <input type="email" placeholder="{{ __('Your Email') }}" class="p-3 rounded-xl bg-gray-800 border border-gray-600 focus:border-blue-500 outline-none" />
-                </div>
-                <div class="flex flex-col text-left">
-                    <label class="mb-2 text-gray-300">{{ __('Message') }}</label>
-                    <textarea placeholder="{{ __('Your Message') }}" rows="5" class="p-3 rounded-xl bg-gray-800 border border-gray-600 focus:border-blue-500 outline-none"></textarea>
-                </div>
-                <button type="submit" class="w-full py-3 rounded-2xl bg-blue-500 hover:bg-blue-400 font-semibold">{{ __('Send') }}</button>
-            </form>
-        </section>
+        <x-landing.section id="contact" title="Contact Us" tagline="Questions, suggestions, or partnerships? Send us a message and we will respond quickly." gradient="to-b" from="pure" to="blue" class="w-full">
+            <x-contact-form/>
+        </x-landing.section>
 
-        <!-- Footer -->
-        <footer class="py-12 text-center bg-black border-t border-gray-800">
+        <footer class="py-12 text-center bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
             <p class="text-gray-500 mb-4">© 2025 {{ config('app.name') }}. {{ __('All rights reserved.') }}</p>
-            <div class="flex justify-center space-x-6 text-gray-400">
-                <a href="#docs" class="hover:text-white">{{ __('Documentation') }}</a>
-                <a href="#pricing" class="hover:text-white">{{ __('Pricing') }}</a>
-                <a href="#contact" class="hover:text-white">{{ __('Contact') }}</a>
+            <div class="flex justify-center space-x-6 text-gray-600 dark:text-gray-400">
+                <a href="#docs" class="hover:text-black dark:hover:text-white">{{ __('Documentation') }}</a>
+                <a href="#pricing" class="hover:text-black dark:hover:text-white">{{ __('Pricing') }}</a>
+                <a href="#contact" class="hover:text-black dark:hover:text-white">{{ __('Contact') }}</a>
             </div>
         </footer>
     </body>
