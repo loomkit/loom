@@ -15,6 +15,7 @@ class PasswordField extends Field
 
         return TextInput::make($name)
             ->password()
+            ->required()
             ->revealable(config()->boolean('loom.components.password.revealable', true))
             ->confirmed(config()->boolean('loom.components.password.confirmed', true))
             ->visible(fn (?Model $record) => $record === null || $record->exists)
