@@ -15,9 +15,9 @@ class PasswordField extends Field
 
         return TextInput::make($name)
             ->password()
-            ->required()
             ->revealable(config()->boolean('loom.components.password.revealable', true))
             ->confirmed(config()->boolean('loom.components.password.confirmed', true))
+            ->required(fn (?Model $record) => $record === null)
             ->visible(fn (?Model $record) => $record === null || $record->exists)
             ->dehydrated(fn ($state) => ! empty($state))
             ->dehydrateStateUsing(fn ($state) => empty($state) ? null : bcrypt($state))
