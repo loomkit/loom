@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Filament\Infolists\Components\{{ component }};
+
+class {{ class }} extends {{ base }}
+{
+    public static function make(?string $name = null): {{ component }}
+    {
+        $name ??= {{ name }};
+
+        return {{ component }}::make($name)
+            ->label(__({{ label }}));
+    }
+}

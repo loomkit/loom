@@ -7,6 +7,7 @@ namespace Loom;
 use Filament\Facades\Filament;
 use Loom\Commands\InstallCommand;
 use Loom\Commands\MakeColumnCommand;
+use Loom\Commands\MakeEntryCommand;
 use Loom\Commands\MakeFieldCommand;
 use Spatie\LaravelPackageTools\Package;
 
@@ -52,6 +53,7 @@ class LoomServiceProvider extends LoomPackageServiceProvider
     {
         $commands = [
             MakeColumnCommand::class,
+            MakeEntryCommand::class,
             MakeFieldCommand::class,
         ];
 
