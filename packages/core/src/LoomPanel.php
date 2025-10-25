@@ -61,7 +61,6 @@ class LoomPanel extends Panel
             ->navigationItems([
                 NavigationItem::make(fn () => loom()->trans('panels.navigation.home'))
                     ->url(url('/'))
-                    ->openUrlInNewTab()
                     ->sort(-5)
                     ->icon(Heroicon::OutlinedHome),
             ])
